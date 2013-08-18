@@ -1,0 +1,18 @@
+Apartment Complex: 1
+
+Apartment 302: 10:04:50 - 13:23:47
+
+Apartment 401: 05:37:00 - 17:13:57
+
+Apartment 601: Does not exist
+
+Apartment 303: 09:21:19 - 18:17:00
+
+Apartment Complex: 2
+
+Apartment 101: 05:37:00 - 12:53:32
+
+Apartment 302: 09:08:55 - 14:52:47
+
+Apartment 503: 09:01:12 - 18:17:00
+
