@@ -41,10 +41,18 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str();}
 
-
+int in[5];
 
 int main(){
 	
+	int t; cin >> t;
+	int caso = 1;
+	while(t--){
+		int a;
+		fr(i,0,3) scanf("%d", in+i);		
+		sort(in, in+3);
+		printf("Case %d: %d\n", caso++, in[1]);
+	}
 	
 	return 0;
 }

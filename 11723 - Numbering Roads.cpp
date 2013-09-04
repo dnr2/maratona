@@ -44,7 +44,15 @@ template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<
 
 
 int main(){
+	int r, n;
+	int caso = 1;
+	while( scanf("%d %d", &r,&n) > 0 && ( r || n)) {
 	
-	
+		int total = r / n + ((r % n)?1:0) - 1; 
+		
+		if( total > 26) printf("Case %d: impossible\n", caso++);
+		else printf("Case %d: %d\n", caso++, total);
+		
+	}
 	return 0;
 }
