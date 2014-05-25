@@ -56,7 +56,6 @@ int main(){
 		sort(in,in+n,cmp);
 		double resp = 0;  int ant = 0;
 		fr(i,1,n) {
-			// db( in[i].F _ in[i].S);
 			if( in[i].S > in[ant].S  ) {
 				double dist = hypot( in[i].F - in[i-1].F, in[i].S - in[i-1].S);
 				resp += dist * ( fabs( in[i].S - in[ant].S) / fabs( in[i].S - in[i-1].S));

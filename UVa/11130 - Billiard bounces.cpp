@@ -28,8 +28,7 @@
 using namespace std;
 
 int main(){
-	// freopen("in.txt", "r", stdin);
-	// freopen("out.txt", "w", stdout);
+
 	double a, b ,v,A,s;
 	while(scanf("%lf %lf %lf %lf %lf", &a, &b , &v, &A, &s) > 0){
 		if( s < EPS) break;

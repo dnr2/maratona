@@ -26,14 +26,12 @@
 #define pdd pair<double,double>
 #define F first
 #define S second
-#define fr(i,j,k) for(int (i)=(j);(i)<(k);++(i))
-#define rep(i,n) for(int (i)=0;(i)<(n);++(i))
+#define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
 #define pb push_back
 #define PI acos(-1)
 #define db(x) cerr << #x << " = " << x << endl;
 #define _ << ", " << 
 #define mp make_pair
-#define cl(x) memset(x,0,sizeof(x))
 #define EPS 1e-9
 // #define umap unordered_map
 
