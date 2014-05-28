@@ -108,7 +108,7 @@ int main(){
 	REP(cn,1,T+1){		
 		int n, hi = 0, lo = INF; scanf("%d", &n);				
 		REP(i,0,n){
-			scanf("%d", in[i], in[i]+1, in[i]+2);
+			scanf("%d%d%d", in[i], in[i]+1, in[i]+2);
 			hi = max( hi , in[i][2]);
 			lo = max( lo , in[i][1]);
 		}

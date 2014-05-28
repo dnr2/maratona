@@ -1,7 +1,7 @@
 //http://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=3876
 //#tag hash map
-//#tag bfs busca em largura de dois niveis
-//#sol 
+//#tag bfs two level breadth first search busca de dois niveis
+//#sol
 
 #include <cstdio>
 #include <cstring>
@@ -24,8 +24,8 @@
 #define pdd pair<double,double>
 #define F first
 #define S second
-#define fr(i,j,k) for(int (i)=(j);(i)<(k);++(i))
-#define rep(i,n) for(int (i)=0;(i)<(n);++(i))
+#define fr(i,j,k) for(ll (i)=(j);(i)<(k);++(i))
+#define rep(i,n) for(ll (i)=0;(i)<(n);++(i))
 #define pb push_back
 #define PI acos(-1)
 #define db(x) cerr << #x << " = " << x << endl;
@@ -34,110 +34,61 @@
 #define cl(x) memset(x,0,sizeof(x))
 
 using namespace std;
-ll prime = 4200187, prime2 = 3214567;
 
-int hash(ll in){
-	int ret = (int) (in % prime);
-	return ret;
-}
+unordered_map<ll, int> mapa[2];
+ll off= 1;
+ll target = 0;
 
-// template<class K, class V> struct HashMap {
-    // vector<pair<K, V> > tab;
-    // vector<char> used;
-    // HashMap(int maxsize) : tab(maxsize), used(maxsize, 0) {}
-    // V *lookup(const K &key, bool insert) {
-        // for (int i = hash(key) % tab.size();;) {
-            // if (used[i]) {
-                // if (tab[i].first == key) return &tab[i].second;
-            // } else {
-                // if (!insert) return NULL;
-                // used[i] = 1;
-                // tab[i].first = key;
-                // return &tab[i].second;
-            // }
-            // if (++i == tab.size()) i = 0;
-        // }
-    // }
-    // V &operator[](const K &key) { return *lookup(key, true); }
-    // bool contains(const K &key) { return lookup(key, false) != NULL; }
-// };
-
-// map<ll, pii> mapa;
-
-unordered_map<ll, ll > mapa;
-int passo=0,n,m,t;
-ll target = 0; 
-ll pot[13];
-bool seq;
-ll mov[] = { 2,3,4,5,6,12,7,8,9,10,11,1,
-			 12,1,2,3,4,5,7,8,9,10,11,6,
-			 1,2,3,4,5,7,8,9,10,11,12,6,
-			 1,2,3,4,5,12,6,7,8,9,10,11,
-			 2,3,4,5,6,7,8,9,10,11,12,1,
+ll mov[] = { 2,3,4,5,6,12,7,8,9,10,11,1, 
+			 12,1,2,3,4,5,7,8,9,10,11,6, 
+			 1,2,3,4,5,7,8,9,10,11,12,6, 
+			 1,2,3,4,5,12,6,7,8,9,10,11, 
+			 2,3,4,5,6,7,8,9,10,11,12,1, 
 			 12,1,2,3,4,5,6,7,8,9,10,11 };
 
-int state = -1;
-
-ll getF(ll x){ ll one = 1; return (( one << 32)-1L) & x; }
-ll getS(ll x){ return x >> 32; }
-ll createPair( ll x, ll y) { return x | (y << 32); }
-
-int bfs(ll init){
-	queue< pair<ll,int> > fila;
-	fila.push( pair<ll,int>(init,0) );
-	pair<ll,int> x; 
-	int ret = -1;
-	while(!fila.empty()){
-		x = fila.front(); fila.pop();		
-		if( x.F == target && !seq){
-			ret = x.S; break;
-		}
-		if( getF( mapa[x.F] ) == passo ) continue;
-		else if( seq &&  getF(mapa[x.F]) == (passo-1)) {
-			ret = (x.S + getS(mapa[x.F])); break;
-		}
-		mapa[x.F] = createPair(passo,x.S);
-
-		if( x.S < 9){ 
-			fr(i,0,6){
-				ll aux = x.F, next = 15;
-				fr(j,0,12){
-					next += (aux % (1<<4)) * mov[(i*12)+j];
-					aux >>= 4;
-				}
-				fila.push( mp(next, (x.S + 1)));
+ll mask = ((1<<4)-1);
+			 
+int bfs(ll init, int sec){
+	queue< ll > q;
+	q.push( init );
+	
+	if( sec  && mapa[0][init] >= 1) return (mapa[0][init] -1);		
+	mapa[sec][init] = off;
+	while(!q.empty()){
+		ll cur = q.front(); q.pop();
+		for(int i=0; i < 6;i++){
+			ll aux = cur, next = 0;
+			for(int j=0; j < 12; j++){
+				next += ( aux & mask ) << mov[(i*12)+j];
+				aux >>= 4;
 			}
-
+			if( mapa[sec][next] >= off) continue;
+			mapa[sec][next] = mapa[sec][cur] + 1;
+			if( sec && mapa[0][next] >= 1 ) return (mapa[0][next]-1) + (mapa[1][next]-off);							
+			if( !sec && mapa[sec][next] >= 11) continue;			
+			q.push( next );
 		}
 	}
-	return ret;
+	return 0;
 }
 
 int main(){
-
-	cin >> t;
-	ll cur,a; pot[0] =1;
-	fr(i,1,12) pot[i] = pot[i-1] << 4; 
-	for(int i=11; i>=0;i--)	{
-		fr(j,0,6){
-			mov[(j*12)+i] = pot[mov[(j*12)+i]-1];
-		}
-		target += (i+1) * pot[i];
+	int T;
+	cin >> T;
+	ll cur,a;
+	fr(i,0,6) fr(j,0,12) mov[(i*12)+j] = ((mov[(i*12)+j]-1)<<2);
+	fr(i,0,12){
+		target += i<<(i<<2);
 	}
-	while(t--){
-		passo++; cur = 0; seq = false;
+	bfs( target, 0);
+	while(T--){
+		cur = 0;
 		fr(i,0,12){
 			cin >> a;
-			cur += a * pot[i];
-		}
-		int ret = bfs(cur);
-		if( ret == -1) {
-			passo++;
-			seq = true;
-			ret = bfs(target);
-		}
-		if( ret == -1) ret = 19;
-		printf("%d\n", ret);
+			cur += (a-1) << (i<<2);
+		}		
+		printf("%d\n", bfs(cur, 1));
+		off+=30;
 	}
 	return 0;
 }
