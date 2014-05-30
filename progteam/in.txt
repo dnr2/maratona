@@ -1,9 +1,24 @@
-4
-3
-2 1 0
-3
-1 0 0
-4
-2 1 1 0
-4
-1 2 1 0
+17
+acm
+icpc
+regional
+asia
+jakarta
+two
+thousand
+and
+nine
+arranged
+by
+universitas
+bina
+nusantara
+especially
+for
+you
+5
+a
+an
+win
+b
+z

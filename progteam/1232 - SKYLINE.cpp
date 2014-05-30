@@ -50,54 +50,33 @@ template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<
 int val[DOTS];
 
 ///segmenttree-add
-int NSEG; // Number of fields (with indices $0,\dots,NSEG-1$)
-pii maxin[DOTS]; // initialize to 0, WARNING: Should have at least size $2\cdot2^k+10$ with $2^k>N$ and $k\in\mathbb Z^+$
-pii off[DOTS]; // initialize to 0, WARNING: Should have at least size $2\cdot2^k+10$ with $2^k>N$ and $k\in\mathbb Z^+$
+int NSEG; // Number of fields (with indices 0 ... NSEG-1)
+pii arr[DOTS];
+bool lazy[DOTS];
 
-pii combine( pii a, pii b){
-	return pii( max( a.F, b.F) , min( a.S, b.S));
-}
-
-void relax(int i) {
-	maxin[i] = combine(minin[i], off[i]);
-	off[2*i+1] = combine( off[2*i+1], off[i]);
-	off[2*i+2] = combine( off[2*i+2], off[i]);
-	off[i] = pii( -1E9, 1E9);
-}
-
-// set(a,b,v) increases the values at $a,\dots,b-1$ by v
-void set(int a, int b, int v, int i=0, int s=0, int e=NSEG) {
-	if (b <= s || e <= a)
-		return;
-	if (a <= s && e <= b) {		
-		off[i].F = max( off[i].F, v);
-		off[i].S = min( off[i].S, v);
-		return;
-	}
-	relax(i);
-	add(a, b, v, 2*i+1, s, (s+e)/2);
-	add(a, b, v, 2*i+2, (s+e)/2, e);
-	
-	maxin[i].F = max( // Change this if you want the minimum.
-		max( maxin[2*i+1].F ,off[2*i+1].F) ,
-		max( maxin[2*i+2].F ,off[2*i+2].F) );
-	maxin[i].S = min( // Change this if you want the minimum.
-		min( maxin[2*i+1].S ,off[2*i+1].S) ,
-		min( maxin[2*i+2].S ,off[2*i+2].S) );	
-	
-}
-
-// query(a,b) returns the maximum of the values at $a,\dots,b-1$
+// query(a,b,v) how many elements is less or equal to v between a ... b-1 and set max and min of skyline
 int query(int a, int b, int v, int i=0, int s=0, int e=NSEG) {
+	// db( a _ b _ v _ i _ s _ e);
 	if (b <= s || e <= a)
 		return 0; 
 	if (a <= s && e <= b){
-		
+		if( v >= arr[i].F ){
+			lazy[i] = true;
+			arr[i].F = arr[i].S = v;
+			return (e-s);
+		}
+		if( v < arr[i].S || a == b) return 0;
 	}
-	relax(i);
-	return 
-		query(a, b, 2*i+1, s, (s+e)/2) +
-		query(a, b, 2*i+2, (s+e)/2, e);
+	if( lazy[i] ){
+		query(s, e, arr[i].F, 2*i+1, s, (s+e)/2); //TODO s,e?
+		query(s, e, arr[i].F, 2*i+2, (s+e)/2, e); //TODO s,e?
+		lazy[i] = 0;
+	}
+	int left = query(a, b, v, 2*i+1, s, (s+e)/2);
+	int right = query(a, b, v, 2*i+2, (s+e)/2, e);
+	arr[i].F = max( arr[2*i+1].F , arr[2*i+2].F);
+	arr[i].S = min( arr[2*i+1].S , arr[2*i+2].S);
+	return left + right;
 }
 
 int in[100000][3];
@@ -105,23 +84,21 @@ int in[100000][3];
 int main(){
 	
 	int T; cin >> T;
-	REP(cn,1,T+1){		
-		int n, hi = 0, lo = INF; scanf("%d", &n);				
+	REP(cn,1,T+1){	
+		int n, hi = 0; scanf("%d", &n);				
 		REP(i,0,n){
-			scanf("%d%d%d", in[i], in[i]+1, in[i]+2);
-			hi = max( hi , in[i][2]);
-			lo = max( lo , in[i][1]);
+			scanf("%d%d%d", in[i], in[i]+1, in[i]+2);			
+			hi = max( hi, in[i][1]);
 		}
-		NSEG = hi - lo + 10;
-		REP(i,0,NSEG * 3){
-			off[i] = maxin[i] = pii( -1E9, 1E9);
+		NSEG = hi+1;
+		REP(i,0, NSEG * 3){
+			arr[i] = pii(0,0); lazy[i] = false;
 		}
-		int resp = 0;
+		ll resp = 0;
 		REP(i,0,n){
-			resp += query(in[i][0], in[i][1], in[i][2]);
-			add( in[i][0], in[i][1], in[i][2] );
+			resp += query(in[i][0], in[i][1], in[i][2]+1);			
 		}
-		printf("%d\n");
+		printf("%lld\n", resp);
 	}	
 	return 0;
 }
