@@ -1,5 +1,5 @@
-//
-//#tag
+//http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=929
+//#tag 
 //#sol
 
 #include <cstdio>
@@ -34,48 +34,35 @@
 #define _ << ", " << 
 #define mp make_pair
 #define EPS 1e-9
-#define INF 0x3f3f3f3f
-#define IOFAST() ios_base::sync_with_stdio(0);cin.tie(0)
+#define FOREACH(i,v) for(typeof((v).begin()) i=(v).begin();i!=(v).end();i++)
+#define IOFAST ios_base::sync_with_stdio(0);cin.tie(0);
+
 // #define umap unordered_map
 
 using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str();}
 
-
+const int SIZE = 1000000;
+int dp[SIZE];
 
 int main(){
-	
-	ull a; int b;
-	while( cin >> a >> b){		
-		ull tmp = a;
-		vector<int> v;
-		while( tmp > 0){
-			v.pb( tmp % 10);
-			tmp /= 10;
-		}
-		int sz = v.size();
-		REP(i,0,sz/2) swap( v[i], v[sz-i-1]);
-		REP(i,0,sz){
-			int pos = i;
-			REP(j,i+1,sz){
-				if( v[j] > v[pos] && b >= j - i){
-					pos= j;				
-				}				
+	int n; bool f = true;
+	while(scanf("%d", &n) > 0){
+		int resp = 0;
+		fill_n(dp,SIZE,0);
+		dp[0] = 1;
+		REP(i,0,n){
+			int m; scanf("%d", &m);
+			REP(j,0,m){
+				int a; scanf("%d", &a);
+				dp[a] += dp[i];
 			}
-			int val = v[pos];
-			v.erase( v.begin() + pos);
-			v.insert( v.begin() + i , val);
-			b -= pos - i;
-			if( b == 0) break;
+			if( m == 0) resp += dp[i];
 		}
-		REP(i,0,sz/2) swap( v[i], v[sz-i-1]);
-		ull resp = 0, ten = 1;
-		REP(i,0,sz){
-			resp += ten * ((ull) v[i]);
-			ten *= 10;
-		}
-		cout << resp << endl;
+		if(f) f=false;
+		else puts("");
+		printf("%d\n", resp);
 	}
 	return 0;
 }

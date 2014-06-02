@@ -36,11 +36,14 @@
 #define EPS 1e-9
 #define INF 0x3f3f3f3f
 #define IOFAST() ios_base::sync_with_stdio(0);cin.tie(0)
+#define FILL(x,v) memset(x,v,sizeof(x))
 // #define umap unordered_map
 
 using namespace std;
 
-template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str();}
+template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
+
+const int MAXN = 100;
 
 int main(){
 	

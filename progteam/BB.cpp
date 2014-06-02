@@ -21,7 +21,7 @@
 
 // #include <unordered_map>
 
-#define ll long long
+#define ll unsigned long long
 #define ull unsigned long long
 #define pii pair<int,int>
 #define pdd pair<double,double>
@@ -43,39 +43,50 @@ using namespace std;
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str();}
 
 
+int sz;
+vector<ll> digs;
+ll dswap( int a ,int b, ll c){
+	digs.clear();
+	REP(i,0,sz){
+		digs.pb( c % 10);
+		c /= 10;
+	}
+	swap( digs[a], digs[b]);
+	ll ten = 1;
+	ll ret = 0;
+	REP(i,0,sz){
+		ret += digs[i] * ten;
+		ten *= 10;
+	}
+	return ret;
+}
+
+map<pair<ll,int>, ll> dp;
+
+ll rec(ll a, int b){
+	if( b == 0) return a;
+	if( dp[mp(a,b)] ) return dp[mp(a,b)];	
+	ll best = a;	
+	REP(j,1,sz){			
+		ll tmp = dswap( j, j-1, a);
+		if( tmp <= a) continue;
+		tmp = rec( tmp, b-1);
+		best = max(best, tmp);
+	}
+	return dp[mp(a,b)] = best;
+}
 
 int main(){
 	
-	ull a; int b;
-	while( cin >> a >> b){		
-		ull tmp = a;
-		vector<int> v;
+	ll a; int b;
+	while( cin >> a >> b){
+		dp.clear();
+		ll tmp = a;
+		sz = 0;
 		while( tmp > 0){
-			v.pb( tmp % 10);
-			tmp /= 10;
+			sz++; tmp /= 10;
 		}
-		int sz = v.size();
-		REP(i,0,sz/2) swap( v[i], v[sz-i-1]);
-		REP(i,0,sz){
-			int pos = i;
-			REP(j,i+1,sz){
-				if( v[j] > v[pos] && b >= j - i){
-					pos= j;				
-				}				
-			}
-			int val = v[pos];
-			v.erase( v.begin() + pos);
-			v.insert( v.begin() + i , val);
-			b -= pos - i;
-			if( b == 0) break;
-		}
-		REP(i,0,sz/2) swap( v[i], v[sz-i-1]);
-		ull resp = 0, ten = 1;
-		REP(i,0,sz){
-			resp += ten * ((ull) v[i]);
-			ten *= 10;
-		}
-		cout << resp << endl;
+		cout << rec( a, b) << endl;
 	}
 	return 0;
 }

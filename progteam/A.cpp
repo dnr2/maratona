@@ -42,44 +42,20 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str();}
 
-struct st{
-	string str;
-	const bool operator < ( const st & in ) const {
-		int ret1 = 0, ret2 = 0;
-		REP(i,0,(int)str.size()){
-			ret1 += str[i] -'A' + 1;
-		}
-		REP(i,0,(int)in.str.size()){
-			ret2 += in.str[i] -'A' + 1;
-		}
-		if( ret1 == ret2) return str < in.str;
-		return ret1 < ret2;
-	}
-};
-const int maxn = 110;
-st arr[maxn];
+int a[1000];
 
 int main(){
-	int T;
-	cin >>T;
-	bool prim = true;
-	while(T--){
-		int n; cin >> n;
-		REP(i,0,n){
-			string str;
-			cin >> str;
-			st cur;
-			cur.str = str;
-			arr[i] = cur;
+	int n, m ; cin >> n >> m;
+	REP(i,0,n) scanf("%d", a + i);
+	int resp = 0,tmp, pos= 0;
+	while( pos < n){
+		tmp = 0;
+		while( true){
+			if( tmp + a[pos] > m || pos == n) break;
+			tmp += a[pos++];
 		}
-		sort( arr, arr+n);
-		if( prim) prim =false;
-		else puts("");
-		REP(i,0,n){			
-			cout<< arr[i].str << endl;
-		}
+		resp++;
 	}
-	
-	
+	cout << resp << endl;
 	return 0;
 }

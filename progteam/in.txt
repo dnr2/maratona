@@ -1,24 +1,13 @@
-17
-acm
-icpc
-regional
-asia
-jakarta
-two
-thousand
-and
-nine
-arranged
-by
-universitas
-bina
-nusantara
-especially
-for
-you
 5
-a
-an
-win
-b
-z
+2 3
+1 3 4
+1 2 5
+2 5
+3 4
+6
+1 2 3 4 5
+1 2 5
+2 4
+1 3 4
+1 4 5
+3 4 5
