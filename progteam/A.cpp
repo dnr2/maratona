@@ -36,26 +36,31 @@
 #define EPS 1e-9
 #define INF 0x3f3f3f3f
 #define IOFAST() ios_base::sync_with_stdio(0);cin.tie(0)
+#define FILL(x,v) memset(x,v,sizeof(x))
 // #define umap unordered_map
 
 using namespace std;
 
-template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str();}
+template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-int a[1000];
+const int MAXN = 10010;
+
+int in[MAXN];
 
 int main(){
-	int n, m ; cin >> n >> m;
-	REP(i,0,n) scanf("%d", a + i);
-	int resp = 0,tmp, pos= 0;
-	while( pos < n){
-		tmp = 0;
-		while( true){
-			if( tmp + a[pos] > m || pos == n) break;
-			tmp += a[pos++];
+	int n, d;
+	while(cin >> n >> d){
+		int song = 0, sum = 0;
+		REP(i,0,n){
+			scanf("%d", in + i);
+			if( i > 0 ) song +=10;
+			sum += in[i];
 		}
-		resp++;
+		if( song + sum > d){
+			cout << -1 << endl;
+		} else {
+			cout << ((d-sum)/5) << endl;
+		}
 	}
-	cout << resp << endl;
 	return 0;
 }

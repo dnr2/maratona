@@ -1,6 +1,8 @@
 //http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=3639
-//#tag
-//#sol
+//#tag graph grafos
+//#tag all pair shortest path
+//#sol to compute the set I(i,j) use the APSP algorithm and add to the set all 
+//nodes k where dist(i,j) = dist(i,k) + dist(k,j). for each test case S, join all I(i,j) where i and j is in S.
 
 #include <cstdio>
 #include <cstring>

@@ -36,60 +36,48 @@
 #define EPS 1e-9
 #define INF 0x3f3f3f3f
 #define IOFAST() ios_base::sync_with_stdio(0);cin.tie(0)
+#define FILL(x,v) memset(x,v,sizeof(x))
 // #define umap unordered_map
 
 using namespace std;
 
-template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str();}
+template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-struct edge{
-	int a,b,c;
-	edge( int _a= 0, int _b = 0, int _c =0) : a(_a) ,  b(_b), c(_c) {}
-	const bool operator < ( const edge & in) const {
-		return c < in.c;
-	}
-};
+const int MAXN = 100010;
 
-const int maxn = 1100;
-int y[maxn];
-int x[maxn][2];
-int n;
-int pai[maxn];
-edge arr[maxn * maxn];
+ll a[MAXN], b[MAXN];
 
-int rec( int a){
-	if( a == pai[a]) return a;
-	return pai[a] = rec( pai[a]);
-}
-
-int main(){
-	int T; cin >> T;
-	while(T--){
-		cin >> n;
-		REP(i,0,n){
-			int a,b,c;
-			scanf("%d%d%d", &a,&b,&c);
-			y[i] = c;
-			x[i][0] = a;
-			x[i][1] = b;
-		}
-		y[n] = 0; x[n][0] = 0; x[n][1] = maxn * maxn;
-		n++;
-		int sz = 0;
-		REP(i,0,n) pai[i] = i;
-		REP(i,0,n) REP(j,i+1,n){
-			if( x[i][1] < x[j][0] || x[i][0] > x[j][1] ) continue;
-			edge a( i, j, abs( y[i] - y[j] ) );
-			arr[sz++] = a;
-		}
-		sort( arr, arr+ sz);
-		ll resp = 0;
-		REP(i,0,sz){
-			int a = rec( arr[i].a);
-			int b = rec( arr[i].b);
-			if( a == b) continue;
-			resp += arr[i].c;
-			pai[a] = b;
+int main(){	
+	IOFAST();
+	ll n,m;
+	while(cin >> n >> m){
+		REP(i,0,n) cin >> a[i];
+		REP(i,0,m) cin >> b[i];
+		sort( a, a+n);
+		sort( b, b+m, greater<ll>());
+		ll mini = a[0];
+		ll maxi = b[0];
+		ll posa= 0, posb =0;
+		ll resp = 0, steps;
+		while( mini < maxi){
+			while(posa < n && a[posa] <= mini) posa++;
+			while(posb < m && b[posb] >= maxi) posb++;
+			steps = 1e10;
+			if( posa < posb){
+				if( posa < n){
+					steps = abs(a[posa] - a[posa-1]);
+				}
+				steps = min( steps, abs(  maxi - mini));
+				resp += steps * posa;
+				mini += steps;
+			} else {
+				if( posb < m){
+					steps = abs(b[posb] - b[posb-1]);
+				}
+				steps = min( steps, abs(  maxi - mini));				
+				resp += steps * posb;
+				maxi -= steps;	
+			}
 		}
 		cout << resp << endl;
 	}
