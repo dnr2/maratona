@@ -1,2 +1,2 @@
-1
-2
+impossible
+0
