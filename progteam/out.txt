@@ -1,2 +1,5 @@
-impossible
-0
+bounded
+unbounded
+unbounded
+unbounded
+bounded

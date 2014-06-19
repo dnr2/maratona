@@ -1,2 +1,2 @@
-impossible
-7
+bounded
+unbounded
