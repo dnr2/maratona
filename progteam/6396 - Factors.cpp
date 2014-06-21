@@ -43,55 +43,61 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-ull prim[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179};
-ull arr[25];
-ull fat[100], fatsz = 21;
+ull primes[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179};
+ull arr[20];
+ull fat[100], fatsz;
 map<ull,ull> mapa;
 ull maxval = 1;
 
-bool check(ull a, ull b){	
+bool check(ull a, ull b){
 	return maxval / b <= a;
 }
 
-ull fn(int pos){
-	ull div = 1, sum = 0;
-	REP(i,0,pos+1){
-		sum += arr[i];
-		div *= fat[arr[i]];
+void rec(ull num, ull sum, ull sz){		
+	db( num );
+	ull fnum = 1;
+	// if( sum >= fatsz) return; //TODO can be bigger!! D=
+	fnum = fat[sum];	
+	db( fnum );
+	REP(i,0,sz){
+		fnum /= fat[arr[i]];
 	}
-	if( sum >= fatsz) return 0;
-	if( fat[sum] / div >= maxval) return 0;
-	return fat[sum] / div;
-}
-
-void rec(ull num, ull pos){
-	REP(i,1,65){
-		if( pos > 0 && i > arr[pos-1] ) continue;		
-		if( !check( num, prim[pos] )){
-			num *= prim[pos];
-			ull key = fn(pos);		
-			if( key == 0 ) break;
-			arr[pos] = i;
-			db( key _ num );
-			REP(j,0,pos+1) cerr << arr[j] << " ";
-			cerr << endl;
-			if( mapa[key] == 0) mapa[key] = num;
-			else mapa[key] = min( mapa[key], num);
-			rec( num, pos + 1);
+	if( check(fnum, 1) ) return; //TODO
+	if( mapa[fnum] == 0 ) mapa[fnum] = num;
+	else mapa[fnum] = min(mapa[fnum],num);
+	db( fnum _ mapa[fnum] _ num _ sz _ sum);
+	REP(i,0,sz) cerr << arr[i] << " ";
+	cerr << endl;
+	
+	REP(i,0,sz){
+		if( i > 0 && arr[i] >= arr[i-1]) continue;		
+		ull aux = num, nsum = sum;
+		if( !check( aux, primes[i] )){
+			aux *= primes[i];
+			arr[i]++; nsum++;
+			rec( aux, nsum, sz );
+			arr[i]--;
 		}
+	}	
+	if( !check( num, primes[sz])){
+		num *= primes[sz];
+		arr[sz]++;
+		rec( num, sum+1, sz+1);
+		arr[sz]--;
 	}
 }
 
 int main(){
-	maxval = maxval << 63;
-	db( maxval );
+	maxval = maxval << 7;
 	fat[0] = 1;
-	fat[1] = 1;	
-	REP(i,2,21){
-		fat[i] = fat[i-1] * ((ull) i);
+	fat[1] = 1;
+	fatsz = 2;
+	REP(i,2,20){		
+		fat[fatsz] = fat[fatsz-1] * fatsz;		
+		fatsz++;
 	}
 	arr[0] = 1;
-	rec(1, 0);
+	rec(2, 1, 1);
 	for(map<ull,ull>::iterator it =mapa.begin(); it != mapa.end(); it++){
 		cout << it->F << " " << it->S << endl;
 	}
