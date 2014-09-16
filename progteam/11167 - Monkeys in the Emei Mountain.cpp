@@ -7,11 +7,9 @@
 // we can combine the non-appearing timestamps. For example, if t1 and t2 are two adjacent
 // timestamps, we know that we can assign monkeys to slot t1 to drink at most (t2 - t1) x m
 // units of water. We also needs to pay attention that a monkey cannot drink more than 1 unit
-// of water in a single time stamp. This requirement cannot be directly represented by the 
-// ow
+// of water in a single time stamp. This requirement cannot be directly represented by the flow
 // graph construction. However, we can get around this problem by assigning the edge capacity
-// sourcing from a monkey by t2 - t1. With this construction, if there is a feasible 
-// ow, we can
+// sourcing from a monkey by t2 - t1. With this construction, if there is a feasible flow, we can
 // always Find a feasible drinking assignment because each monkey that drinks in [t1, t2] drinks
 // at most t2 - t1 units of water and thus we can always make sure that it does not drink more
 // than 1 units of water in a single time stamp. This construction only has about 300 nodes, a

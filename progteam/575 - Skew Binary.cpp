@@ -27,7 +27,7 @@
 #define PDD pair<double,double>
 #define F first
 #define S second
-#define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
+#define REP(i,j,k) for(ll (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
 #define DB(x) cerr << #x << " = " << x << endl;
@@ -43,18 +43,20 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 110;
-vector<int> adj[MAXN];
-ll p1 = 
+const int MAXN = 100;
+
 int main(){
-	int n; cin >> n;
-	REP(i,0,n){
-		int k; scanf("%d", &k);
-		REP(j,0,k){
-			int a; scanf("%d",&a); a--;
-			adj[i].PB(a);
+	string a;
+	while(cin >> a){
+		if( a == "0") break;
+		ll resp = 0;
+		ll base = 2;
+		ll n = (int)a.size();
+		REP(i,0,n){
+			resp += ((ll)(a[n-i-1]-'0')) * (base-1);
+			base *= 2;
 		}
+		cout << resp << endl;
 	}
-	
 	return 0;
 }

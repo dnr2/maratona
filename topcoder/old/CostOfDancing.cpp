@@ -43,9 +43,14 @@ typedef long long ll;
 #define EPS 1e-9
 #define INF 1e9
 
-struct GameOfSegments {
-    int winner(int N) {
-        return int(0);
+struct CostOfDancing {
+    int minimum(int K, vector <int> danceCost) {
+		int ret = 0;
+		sort( danceCost.begin(), danceCost.end());
+		REP(i,0,K){
+			ret += danceCost[i];			
+		}
+        return ret;
     }
 };
 
@@ -127,62 +132,69 @@ namespace moj_harness {
 	int run_test_case(int casenum__) {
 		switch (casenum__) {
 		case 0: {
-			int N                     = 3;
-			int expected__            = 1;
+			int K                     = 2;
+			int danceCost[]           = {1, 5, 3, 4};
+			int expected__            = 4;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = CostOfDancing().minimum(K, vector <int>(danceCost, danceCost + (sizeof danceCost / sizeof danceCost[0])));
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 1: {
-			int N                     = 4;
-			int expected__            = 1;
+			int K                     = 3;
+			int danceCost[]           = {1, 5, 4};
+			int expected__            = 10;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = CostOfDancing().minimum(K, vector <int>(danceCost, danceCost + (sizeof danceCost / sizeof danceCost[0])));
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 2: {
-			int N                     = 15;
+			int K                     = 1;
+			int danceCost[]           = {2, 2, 4, 5, 3};
 			int expected__            = 2;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = CostOfDancing().minimum(K, vector <int>(danceCost, danceCost + (sizeof danceCost / sizeof danceCost[0])));
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 3: {
-			int N                     = 191;
-			int expected__            = 2;
+			int K                     = 39;
+			int danceCost[]           = {973, 793, 722, 573, 521, 568, 845, 674, 595, 310, 284, 794, 913, 93, 129, 758, 108, 433, 181, 163, 96, 932, 703, 989, 884, 420, 615, 991, 364, 657, 421, 336, 801, 142, 908, 321, 709, 752, 346, 656, 413, 629, 801};
+			int expected__            = 20431;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = CostOfDancing().minimum(K, vector <int>(danceCost, danceCost + (sizeof danceCost / sizeof danceCost[0])));
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 
 		// custom cases
 
 /*      case 4: {
-			int N                     = ;
+			int K                     = ;
+			int danceCost[]           = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = CostOfDancing().minimum(K, vector <int>(danceCost, danceCost + (sizeof danceCost / sizeof danceCost[0])));
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 /*      case 5: {
-			int N                     = ;
+			int K                     = ;
+			int danceCost[]           = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = CostOfDancing().minimum(K, vector <int>(danceCost, danceCost + (sizeof danceCost / sizeof danceCost[0])));
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 /*      case 6: {
-			int N                     = ;
+			int K                     = ;
+			int danceCost[]           = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = CostOfDancing().minimum(K, vector <int>(danceCost, danceCost + (sizeof danceCost / sizeof danceCost[0])));
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 		default:
@@ -206,55 +218,60 @@ int main(int argc, char *argv[]) {
 // BEGIN CUT HERE
 /**
 // PROBLEM STATEMENT
-// Rijél is a very wise teacher. He loves mathematics, especially games and geometry problems. Recently one of his students challenged him to the following game:
+// Gustavo studies at the Byteversity (one of the best universities in Byteland). He's also very keen on dancing, so he decided to enroll at a dance school.
 
-Initially, there is a polygon with N vertices drawn in the plane. The polygon is strictly convex, i.e., each internal angle is strictly smaller than 180 degrees. The vertices of the polygon are numbered 1 through N, in clockwise order.
+The school offers many different courses, each teaching one dance. Different courses may have different costs. You are given a vector <int> danceCost. The elements of danceCost are the costs of all courses offered at the dance school.
 
-Two players play the game on this polygon. The players take alternating turns. In each turn, the current player chooses a diagonal or a side of the polygon and draws it as a straight line segment. (A diagonal of the polygon is a line segment that connects any two non-adjacent vertices of the polygon.) The player is only allowed to choose a diagonal or a side that does not intersect any of the previously drawn segments (it must not share endpoints with any of them either). The player who cannot draw a diagonal or a side according to the above rules loses the game.
+Gustavo would like to learn exactly K of those dances. He is a poor student, so his only priority is to pay as little as possible for the courses.
 
-You are given the int N.
-
-We assume that both players play the game optimally. Return 1 if the first player wins and 2 otherwise.
+You are given the int K and the vector <int> danceCost. Compute and return the smallest possible total cost of learning K dances.
 
 DEFINITION
-Class:GameOfSegments
-Method:winner
-Parameters:int
+Class:CostOfDancing
+Method:minimum
+Parameters:int, vector <int>
 Returns:int
-Method signature:int winner(int N)
+Method signature:int minimum(int K, vector <int> danceCost)
 
 
 CONSTRAINTS
--N will be between 3 and 1,000, inclusive.
+-danceCost will contain between 1 and 1,000 elements, inclusive.
+-Each element of danceCost will be between 1 and 1,000, inclusive.
+-K will be between 1 and the number of elements in danceCost, inclusive.
 
 
 EXAMPLES
 
 0)
-3
+2
+{1, 5, 3, 4}
 
-Returns: 1
+Returns: 4
 
-This polygon has zero diagonals and three sides. The first player will always win no matter which side he picks.
+Gustavo must pay for exactly two out of the four given courses. The cheapest possibility is to pay 1 for one course and then 3 for another course. The total cost is 1+3 = 4.
 
 1)
-4
+3
+{1, 5, 4}
 
-Returns: 1
+Returns: 10
 
-This polygon has four sides and two diagonals. The first player wins the game if he takes one of the diagonals, because he will leave no choice for the second player.
+Gustavo has no choice here. He has to pay for all three courses, which costs 1+5+4 = 10.
 
 2)
-15
+1
+{2, 2, 4, 5, 3}
 
 Returns: 2
 
-
+Among all 5 possible courses he can take, the cheapest one is either the course #0 or course #1 (0-based).
 
 3)
-191
+39
+{973, 793, 722, 573, 521, 568, 845, 674, 595, 310, 284, 794, 913, 93, 129, 758, 108, 433, 181, 163, 96, 932,
+ 703, 989, 884, 420, 615, 991, 364, 657, 421, 336, 801, 142, 908, 321, 709, 752, 346, 656, 413, 629, 801}
 
-Returns: 2
+Returns: 20431
 
 
 

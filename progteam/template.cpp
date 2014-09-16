@@ -23,16 +23,16 @@
 
 #define ll long long
 #define ull unsigned long long
-#define pii pair<int,int>
-#define pdd pair<double,double>
+#define PII pair<int,int>
+#define PDD pair<double,double>
 #define F first
 #define S second
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
-#define pb push_back
+#define PB push_back
 #define PI acos(-1)
-#define db(x) cerr << #x << " = " << x << endl;
+#define DB(x) cerr << #x << " = " << x << endl;
 #define _ << ", " << 
-#define mp make_pair
+#define MP make_pair
 #define EPS 1e-9
 #define INF 0x3f3f3f3f
 #define IOFAST() ios_base::sync_with_stdio(0);cin.tie(0)

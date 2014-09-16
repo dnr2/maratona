@@ -43,17 +43,21 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 110;
-vector<int> adj[MAXN];
-ll p1 = 
+const int MAXN = 100;
+
 int main(){
-	int n; cin >> n;
-	REP(i,0,n){
-		int k; scanf("%d", &k);
-		REP(j,0,k){
-			int a; scanf("%d",&a); a--;
-			adj[i].PB(a);
-		}
+	
+	ll term ;
+	while( cin >> term){
+		ll n;
+		for(n = 0; ((n * n) + n) / 2 < term; n++);
+		ll r = n, c = 1;
+		n--;
+		ll ini = (((n * n) + n) / 2) + 1;		
+		r -= term - ini;
+		c += term - ini;
+		if( (n & 1) == 1) swap( r, c);
+		printf("TERM %lld IS %lld/%lld\n", term, r, c);
 	}
 	
 	return 0;

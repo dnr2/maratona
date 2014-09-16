@@ -43,18 +43,44 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 110;
-vector<int> adj[MAXN];
-ll p1 = 
+const int MAXN = 600000;
+
+
+ll arr[MAXN];
+ll suml[MAXN];
+ll sumr[MAXN];
+ll cont[MAXN];
+
 int main(){
-	int n; cin >> n;
-	REP(i,0,n){
-		int k; scanf("%d", &k);
-		REP(j,0,k){
-			int a; scanf("%d",&a); a--;
-			adj[i].PB(a);
+	IOFAST();
+	ll n; 
+	while( cin >> n ){
+		ll sum = 0;
+		
+		REP(i,0,n){ 
+			cin >> arr[i];
+			sum += arr[i];
+		}
+		ll s = sum / 3; //TODO ll?
+		
+		REP(i,0,n){
+			suml[i] = arr[i] + ((i > 0)? suml[i-1] : 0);		
+			sumr[n-i-1] = arr[n-i-1] + ((i > 0)? sumr[n-i] : 0);			
+		}
+		REP(i,0,n){
+			cont[n-i-1] = ((sumr[n-i-1] == s)? 1 : 0) + ((i > 0)?cont[n-i] : 0 );
+		}
+		if( sum % 3 != 0 || n < 3) cout << 0 << endl;
+		else {			
+			ll resp = 0;			
+			REP(i,0,n){
+				if( i + 2 == n) break;
+				if( s == suml[i] ){
+					resp += cont[i+2];
+				}
+			}
+			cout << resp << endl;
 		}
 	}
-	
 	return 0;
 }

@@ -23,16 +23,16 @@
 
 #define ll long long
 #define ull unsigned long long
-#define pii pair<int,int>
-#define pdd pair<double,double>
+#define PII pair<int,int>
+#define PDD pair<double,double>
 #define F first
 #define S second
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
-#define pb push_back
+#define PB push_back
 #define PI acos(-1)
-#define db(x) cerr << #x << " = " << x << endl;
+#define DB(x) cerr << #x << " = " << x << endl;
 #define _ << ", " << 
-#define mp make_pair
+#define MP make_pair
 #define EPS 1e-9
 #define INF 0x3f3f3f3f
 #define IOFAST() ios_base::sync_with_stdio(0);cin.tie(0)
@@ -43,24 +43,28 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 100010;
-
-int in[MAXN];
+const int MAXN = 100;
+const LL LLINF = 1e15LL;
 
 int main(){
-	int n, d;
-	while(cin >> n >> d){		
-		REP(i,0,n){
-			scanf("%d", in + i);		
+	ll  n, a, b;
+	while( cin >> n >> a >> b){
+		if( a > b ) swap( a, b);
+		n *= 6;
+		if( a * b >= n){
+			cout << a * b << endl << a << " " << b << endl;
+		} else {
+			ll r = LLINF, ra = a, rb = b;
+			for(ll newa = a; newa * newa < n + 1; newa++){
+				ll newb = n / newa + (( n % newa > 0 )? 1 : 0)
+				if( newa * newb < r && newb >= b ){
+					r = newa * newb;
+					ra = newa;
+					rb = newb;
+				}
+			}
+			cout << r << endl << ra << " " << rb << endl;
 		}
-		sort( in, in+n);
-		ll resp = 0; ll x = d;
-		REP(i,0,n){
-			resp += x * ((ll)in[i]);
-			x--;
-			if( x < 1) x = 1;
-		}
-		cout << resp << endl;
 	}
 	return 0;
 }

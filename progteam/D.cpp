@@ -23,16 +23,16 @@
 
 #define ll long long
 #define ull unsigned long long
-#define pii pair<int,int>
-#define pdd pair<double,double>
+#define PII pair<int,int>
+#define PDD pair<double,double>
 #define F first
 #define S second
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
-#define pb push_back
+#define PB push_back
 #define PI acos(-1)
-#define db(x) cerr << #x << " = " << x << endl;
+#define DB(x) cerr << #x << " = " << x << endl;
 #define _ << ", " << 
-#define mp make_pair
+#define MP make_pair
 #define EPS 1e-9
 #define INF 0x3f3f3f3f
 #define IOFAST() ios_base::sync_with_stdio(0);cin.tie(0)
@@ -43,43 +43,31 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 100010;
+const int MAXN = 110;
 
-ll a[MAXN], b[MAXN];
 
-int main(){	
-	IOFAST();
-	ll n,m;
-	while(cin >> n >> m){
-		REP(i,0,n) cin >> a[i];
-		REP(i,0,m) cin >> b[i];
-		sort( a, a+n);
-		sort( b, b+m, greater<ll>());
-		ll mini = a[0];
-		ll maxi = b[0];
-		ll posa= 0, posb =0;
-		ll resp = 0, steps;
-		while( mini < maxi){
-			while(posa < n && a[posa] <= mini) posa++;
-			while(posb < m && b[posb] >= maxi) posb++;
-			steps = 1e10;
-			if( posa < posb){
-				if( posa < n){
-					steps = abs(a[posa] - a[posa-1]);
+double in[MAXN];
+
+int main(){
+	int n; 
+	while(cin >> n){
+		REP(i,0,n) cin >> in[i];
+		sort(in,in+n,greater<double>());		
+		double resp = in[0];
+		DB(resp);
+		REP(i,1,n){
+			double nresp = 0;
+			REP(j,0,i+1){
+				double aux = in[j];
+				REP(k,0,i+1){
+					if( k != j) aux *= (1-in[k]);
 				}
-				steps = min( steps, abs(  maxi - mini));
-				resp += steps * posa;
-				mini += steps;
-			} else {
-				if( posb < m){
-					steps = abs(b[posb] - b[posb-1]);
-				}
-				steps = min( steps, abs(  maxi - mini));				
-				resp += steps * posb;
-				maxi -= steps;	
+				nresp += aux;
 			}
+			if( nresp > resp) resp = nresp;
+			else break;
 		}
-		cout << resp << endl;
+		printf("%.10lf\n", resp) ;
 	}
 	return 0;
 }

@@ -43,8 +43,8 @@ typedef long long ll;
 #define EPS 1e-9
 #define INF 1e9
 
-struct GameOfSegments {
-    int winner(int N) {
+struct ApplesAndPears {
+    int getArea(vector <string> board, int K) {
         return int(0);
     }
 };
@@ -127,62 +127,82 @@ namespace moj_harness {
 	int run_test_case(int casenum__) {
 		switch (casenum__) {
 		case 0: {
-			int N                     = 3;
+			string board[]            = {".A",
+ "P."};
+			int K                     = 0;
 			int expected__            = 1;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = ApplesAndPears().getArea(vector <string>(board, board + (sizeof board / sizeof board[0])), K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 1: {
-			int N                     = 4;
-			int expected__            = 1;
+			string board[]            = {".A",
+ "P."};
+			int K                     = 1;
+			int expected__            = 2;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = ApplesAndPears().getArea(vector <string>(board, board + (sizeof board / sizeof board[0])), K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 2: {
-			int N                     = 15;
-			int expected__            = 2;
+			string board[]            = {".PP", 
+ "PPA", 
+ "PAP"};
+			int K                     = 3;
+			int expected__            = 6;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = ApplesAndPears().getArea(vector <string>(board, board + (sizeof board / sizeof board[0])), K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 3: {
-			int N                     = 191;
-			int expected__            = 2;
+			string board[]            = {"A.P.PAAPPA",
+ "PPP..P.PPP",
+ "AAP.A.PAPA",
+ "P.PA.AAA.A",
+ "...PA.P.PA",
+ "P..A.A.P..",
+ "PAAP..A.A.",
+ "PAAPPA.APA",
+ ".P.AP.P.AA",
+ "..APAPAA.."};
+			int K                     = 10;
+			int expected__            = 21;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = ApplesAndPears().getArea(vector <string>(board, board + (sizeof board / sizeof board[0])), K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 
 		// custom cases
 
 /*      case 4: {
-			int N                     = ;
+			string board[]            = ;
+			int K                     = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = ApplesAndPears().getArea(vector <string>(board, board + (sizeof board / sizeof board[0])), K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 /*      case 5: {
-			int N                     = ;
+			string board[]            = ;
+			int K                     = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = ApplesAndPears().getArea(vector <string>(board, board + (sizeof board / sizeof board[0])), K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 /*      case 6: {
-			int N                     = ;
+			string board[]            = ;
+			int K                     = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = ApplesAndPears().getArea(vector <string>(board, board + (sizeof board / sizeof board[0])), K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 		default:
@@ -206,55 +226,85 @@ int main(int argc, char *argv[]) {
 // BEGIN CUT HERE
 /**
 // PROBLEM STATEMENT
-// Rijél is a very wise teacher. He loves mathematics, especially games and geometry problems. Recently one of his students challenged him to the following game:
+// A square board is divided into N rows by N columns of unit square cells.
+Some cells of the board are empty.
+Each of the other cells contains either an apple or a pear.
+You are given the current state of the board as a vector <string> board.
+In board, the character '.' denotes an empty cell, 'A' denotes an apple, and 'P' denotes a pear.
 
-Initially, there is a polygon with N vertices drawn in the plane. The polygon is strictly convex, i.e., each internal angle is strictly smaller than 180 degrees. The vertices of the polygon are numbered 1 through N, in clockwise order.
+You are allowed to perform at most K moves.
+In each move, you can pick up one fruit (an apple or a pear) and place it onto any empty cell.
+(The new cell doesn't have to be adjacent to the old one.)
+Note that you cannot remove fruit from the board, you are only allowed to move it onto different cells.
 
-Two players play the game on this polygon. The players take alternating turns. In each turn, the current player chooses a diagonal or a side of the polygon and draws it as a straight line segment. (A diagonal of the polygon is a line segment that connects any two non-adjacent vertices of the polygon.) The player is only allowed to choose a diagonal or a side that does not intersect any of the previously drawn segments (it must not share endpoints with any of them either). The player who cannot draw a diagonal or a side according to the above rules loses the game.
-
-You are given the int N.
-
-We assume that both players play the game optimally. Return 1 if the first player wins and 2 otherwise.
+A rectangular section of the board is called uniform if all cells in the rectangle are the same:
+that is, either all those cells contain apples, or they all contain pears, or all of them are empty.
+After you are done moving the fruit, you want to have a uniform rectangle that is as large as possible somewhere on the board.
+Return the largest possible area of such a rectangle.
 
 DEFINITION
-Class:GameOfSegments
-Method:winner
-Parameters:int
+Class:ApplesAndPears
+Method:getArea
+Parameters:vector <string>, int
 Returns:int
-Method signature:int winner(int N)
+Method signature:int getArea(vector <string> board, int K)
 
 
 CONSTRAINTS
--N will be between 3 and 1,000, inclusive.
+-N will be between 1 and 50, inclusive.
+-board will contain exactly N elements.
+-Each element of board will contain exactly N characters.
+-Each character in board will be '.', 'A', or 'P'.
+-K will be between 0 and 1000, inclusive.
 
 
 EXAMPLES
 
 0)
-3
+{".A",
+ "P."}
+0
 
 Returns: 1
 
-This polygon has zero diagonals and three sides. The first player will always win no matter which side he picks.
+As K=0, you are not allowed to make any moves.
+Currently, the largest uniform rectangle is just a single cell.
 
 1)
-4
+{".A",
+ "P."}
+1
 
-Returns: 1
+Returns: 2
 
-This polygon has four sides and two diagonals. The first player wins the game if he takes one of the diagonals, because he will leave no choice for the second player.
+Move any piece of fruit onto any of the two currently empty cells.
+After the move, there will be two adjacent empty cells.
+These form a 2x1 uniform rectangle.
 
 2)
-15
+{".PP", 
+ "PPA", 
+ "PAP"}
+3
 
-Returns: 2
+Returns: 6
 
-
+In three moves, you can create a 3x2 rectangle of cells that contain pears.
 
 3)
-191
+{"A.P.PAAPPA",
+ "PPP..P.PPP",
+ "AAP.A.PAPA",
+ "P.PA.AAA.A",
+ "...PA.P.PA",
+ "P..A.A.P..",
+ "PAAP..A.A.",
+ "PAAPPA.APA",
+ ".P.AP.P.AA",
+ "..APAPAA.."}
+10
 
-Returns: 2
+Returns: 21
 
 
 

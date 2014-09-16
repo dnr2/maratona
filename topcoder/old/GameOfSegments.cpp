@@ -43,9 +43,28 @@ typedef long long ll;
 #define EPS 1e-9
 #define INF 1e9
 
+int table[] = {1,2,2,2,1,2,2,2,1};
+
+int dp[2000];
+
+int rec(int n){
+	if(dp[n]!=0) return dp[n];
+	if( n == 0 ) return dp[n] = 2;
+	if( n == 1 ) return dp[n] = 2;
+	if( n == 2 ) return dp[n] = 1;
+	int ret = 0;
+	REP(i,0,n-1){
+		int j = n-2-i;
+		ret |= table[(rec(i)-1)*3+(rec(j)-1)];
+	}
+	return dp[n] = ret;
+}
+
 struct GameOfSegments {
     int winner(int N) {
-        return int(0);
+		int ret = (rec(N)&1)?1:2;
+		if( N == 191 ) REP(i,0,20) db( i _ dp[i] _  (dp[i]&1));
+        return ret;
     }
 };
 
@@ -161,30 +180,42 @@ namespace moj_harness {
 
 		// custom cases
 
-/*      case 4: {
-			int N                     = ;
-			int expected__            = ;
+		case 4: {
+			int N                     = 7;
+			int expected__            = 1;
 
 			std::clock_t start__      = std::clock();
 			int received__            = GameOfSegments().winner(N);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}*/
-/*      case 5: {
-			int N                     = ;
-			int expected__            = ;
+		}
+		
+		case 5: {
+			int N                     = 8;
+			int expected__            = 1;
 
 			std::clock_t start__      = std::clock();
 			int received__            = GameOfSegments().winner(N);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}*/
-/*      case 6: {
-			int N                     = ;
-			int expected__            = ;
+		}
+		
+		case 7: {
+			int N                     = 9;
+			int expected__            = 2;
 
 			std::clock_t start__      = std::clock();
 			int received__            = GameOfSegments().winner(N);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}*/
+		}
+		
+		case 8: {
+			int N                     = 10;
+			int expected__            = 1;
+
+			std::clock_t start__      = std::clock();
+			int received__            = GameOfSegments().winner(N);
+			return verify_case(casenum__, expected__, received__, clock()-start__);
+		}
+		
 		default:
 			return -1;
 		}

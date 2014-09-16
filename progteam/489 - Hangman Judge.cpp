@@ -43,18 +43,33 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 110;
-vector<int> adj[MAXN];
-ll p1 = 
+const int MAXN = 100;
+
 int main(){
-	int n; cin >> n;
-	REP(i,0,n){
-		int k; scanf("%d", &k);
-		REP(j,0,k){
-			int a; scanf("%d",&a); a--;
-			adj[i].PB(a);
+	int cn; string x, y;
+	while( cin >> cn && cn != -1){
+		cin >> x >> y;
+		int a = 0, b = 0, c = 0;
+		map<int,int> mapa;
+		int sz = x.size();
+		REP(i,0,sz){
+			if( mapa[x[i]] == 0) c++;
+			mapa[x[i]] = 1;
 		}
-	}
-	
+		sz = y.size();
+		REP(i,0,sz){
+			if( mapa[y[i]] == 1){ a++; mapa[y[i]] = 0; }
+			else { b++; }
+			if( b == 7 || a == c ) break;
+		}
+		printf("Round %d\n", cn);
+		if( b >= 7){
+			printf("You lose.\n");
+		} else if( a == c){
+			printf("You win.\n");
+		} else {
+			printf("You chickened out.\n");
+		}
+	}	
 	return 0;
 }
