@@ -1,6 +1,6 @@
-//
-//#tag
-//#sol
+//https://www.urionlinejudge.com.br/judge/en/problems/view/1026
+//#tag ad hoc
+//#sol XOR the two number bitwise
 
 #include <cstdio>
 #include <cstring>
@@ -25,9 +25,9 @@
 #define ull unsigned long long
 #define PII pair<int,int>
 #define PDD pair<double,double>
-#define F first
-#define S second
-#define REP(i,j,k) for(ll (i)=(j);(i)<(k);++(i))
+#define FT first
+#define SD second
+#define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
 #define DB(x) cerr << #x << " = " << x << endl;
@@ -46,17 +46,9 @@ template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<
 const int MAXN = 100;
 
 int main(){
-	string a;
-	while(cin >> a){
-		if( a == "0") break;
-		ll resp = 0;
-		ll base = 2;
-		ll n = (int)a.size();
-		REP(i,0,n){
-			resp += ((ll)(a[n-i-1]-'0')) * (base-1);
-			base *= 2;
-		}
-		cout << resp << endl;
+	ll a, b;
+	while( cin >> a >> b){		
+		cout << (a^b) << endl;
 	}
 	return 0;
 }

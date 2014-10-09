@@ -1,4 +1,4 @@
-//
+//http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=516
 //#tag
 //#sol
 
@@ -27,7 +27,7 @@
 #define PDD pair<double,double>
 #define F first
 #define S second
-#define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
+#define REP(i,j,k) for(ll (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
 #define DB(x) cerr << #x << " = " << x << endl;
@@ -46,19 +46,17 @@ template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<
 const int MAXN = 100;
 
 int main(){
-	
-	ll term ;
-	while( cin >> term){
-		ll n;
-		for(n = 0; ((n * n) + n) / 2 < term; n++);
-		ll r = n, c = 1;
-		n--;
-		ll ini = (((n * n) + n) / 2) + 1;		
-		r -= term - ini;
-		c += term - ini;
-		if( (n & 1) == 1) swap( r, c);
-		printf("TERM %lld IS %lld/%lld\n", term, r, c);
+	string a;
+	while(cin >> a){
+		if( a == "0") break;
+		ll resp = 0;
+		ll base = 2;
+		ll n = (int)a.size();
+		REP(i,0,n){
+			resp += ((ll)(a[n-i-1]-'0')) * (base-1);
+			base *= 2;
+		}
+		cout << resp << endl;
 	}
-	
 	return 0;
 }

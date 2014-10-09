@@ -1,4 +1,4 @@
-//https://www.urionlinejudge.com.br/judge/en/challenges/view/21/5
+//http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=430
 //#tag
 //#sol
 
@@ -25,8 +25,8 @@
 #define ull unsigned long long
 #define PII pair<int,int>
 #define PDD pair<double,double>
-#define FT first
-#define SD second
+#define F first
+#define S second
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
@@ -43,40 +43,33 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 100000;
-
-bool si[MAXN];
-int pri[MAXN];
-int plen = 0;
-vector<int> v[2];
+const int MAXN = 100;
 
 int main(){
-	REP(i,2,MAXN) { 
-		if( si[i] ) continue;
-		si[i] = true; pri[plen++] = i;
-		for(int j = i + i; j < MAXN; j += i) si[j] = true;
-	}
-	
-	int a,b,x,y;
-	while(scanf("%d%d", &a, &b ) > 0){
-		x = y = 1;
-		REP(i,0,plen){
-			while( a % pri[i] == 0 && b % pri[i] == 0 ){
-				a /= pri[i]; b /= pri[i];
-			}
-			while( a % pri[i] == 0 ){
-				x *= pri[i], a /= pri[i];
-			}
-			while( b % pri[i] == 0){
-				y *= pri[i], b /= pri[i];
-			}	
-			if( a < pri[i] && b < pri[i] ) break;
+	int cn; string x, y;
+	while( cin >> cn && cn != -1){
+		cin >> x >> y;
+		int a = 0, b = 0, c = 0;
+		map<int,int> mapa;
+		int sz = x.size();
+		REP(i,0,sz){
+			if( mapa[x[i]] == 0) c++;
+			mapa[x[i]] = 1;
 		}
-		if( a != b ){
-			if( a > 1 ) x *= a;
-			if( b > 1 ) y *= b;
+		sz = y.size();
+		REP(i,0,sz){
+			if( mapa[y[i]] == 1){ a++; mapa[y[i]] = 0; }
+			else { b++; }
+			if( b == 7 || a == c ) break;
 		}
-		cout << (y + x) * 2 << endl;
-	}
+		printf("Round %d\n", cn);
+		if( b >= 7){
+			printf("You lose.\n");
+		} else if( a == c){
+			printf("You win.\n");
+		} else {
+			printf("You chickened out.\n");
+		}
+	}	
 	return 0;
 }

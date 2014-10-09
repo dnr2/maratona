@@ -1,6 +1,6 @@
-//
-//#tag
-//#sol
+//https://www.urionlinejudge.com.br/judge/en/problems/view/1001
+//#tag ad hoc
+//#sol sum the two numbers
 
 #include <cstdio>
 #include <cstring>
@@ -25,8 +25,8 @@
 #define ull unsigned long long
 #define PII pair<int,int>
 #define PDD pair<double,double>
-#define F first
-#define S second
+#define FT first
+#define SD second
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
@@ -46,30 +46,8 @@ template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<
 const int MAXN = 100;
 
 int main(){
-	int cn; string x, y;
-	while( cin >> cn && cn != -1){
-		cin >> x >> y;
-		int a = 0, b = 0, c = 0;
-		map<int,int> mapa;
-		int sz = x.size();
-		REP(i,0,sz){
-			if( mapa[x[i]] == 0) c++;
-			mapa[x[i]] = 1;
-		}
-		sz = y.size();
-		REP(i,0,sz){
-			if( mapa[y[i]] == 1){ a++; mapa[y[i]] = 0; }
-			else { b++; }
-			if( b == 7 || a == c ) break;
-		}
-		printf("Round %d\n", cn);
-		if( b >= 7){
-			printf("You lose.\n");
-		} else if( a == c){
-			printf("You win.\n");
-		} else {
-			printf("You chickened out.\n");
-		}
-	}	
+	int a, b;
+	cin >> a >> b;
+	printf("X = %d\n", a + b);
 	return 0;
 }

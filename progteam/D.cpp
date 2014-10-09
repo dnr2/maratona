@@ -25,9 +25,9 @@
 #define ull unsigned long long
 #define PII pair<int,int>
 #define PDD pair<double,double>
-#define F first
-#define S second
-#define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
+#define FT first
+#define SD second
+#define REP(i,j,k) for(ll (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
 #define DB(x) cerr << #x << " = " << x << endl;
@@ -43,31 +43,24 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 110;
-
-
-double in[MAXN];
+const int MAXN = 200010;
+const ll mod = 1000000007;
+ll dp[MAXN], sum[MAXN];
 
 int main(){
-	int n; 
-	while(cin >> n){
-		REP(i,0,n) cin >> in[i];
-		sort(in,in+n,greater<double>());		
-		double resp = in[0];
-		DB(resp);
-		REP(i,1,n){
-			double nresp = 0;
-			REP(j,0,i+1){
-				double aux = in[j];
-				REP(k,0,i+1){
-					if( k != j) aux *= (1-in[k]);
-				}
-				nresp += aux;
-			}
-			if( nresp > resp) resp = nresp;
-			else break;
-		}
-		printf("%.10lf\n", resp) ;
+	IOFAST();
+	ll t, k; cin >> t >> k;
+	dp[0] = 1, sum[0] = 0;
+	REP(i,1,MAXN){
+		dp[i] = (dp[i-1] + i / k ) % mod;
+		sum[i] = (dp[i] + sum[i-1]) % mod;
 	}
+	REP(i,0,t){
+		ll a, b; cin >> a >> b;
+		ll resp = (sum[b] - sum[a-1]);
+		while( resp < 0) resp += mod;
+		cout << resp % mod << endl;
+	}
+	
 	return 0;
 }

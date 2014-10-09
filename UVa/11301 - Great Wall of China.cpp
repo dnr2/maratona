@@ -1,5 +1,5 @@
-//
-//#tag
+//http://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=2276
+//#tag minimum cost flow / fluxo de custo minimo
 //#sol
 
 #include <cstdio>

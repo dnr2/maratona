@@ -49,6 +49,7 @@ bool si[MAXN];
 int pri[MAXN];
 int plen = 0;
 vector<int> v[2];
+int in[2];
 
 int main(){
 	REP(i,2,MAXN) { 
@@ -56,27 +57,34 @@ int main(){
 		si[i] = true; pri[plen++] = i;
 		for(int j = i + i; j < MAXN; j += i) si[j] = true;
 	}
-	
-	int a,b,x,y;
-	while(scanf("%d%d", &a, &b ) > 0){
-		x = y = 1;
-		REP(i,0,plen){
-			while( a % pri[i] == 0 && b % pri[i] == 0 ){
-				a /= pri[i]; b /= pri[i];
+	while(scanf("%d%d", in, in+1 ) > 0){
+		
+		REP(i,0,2){
+			v[i].clear();
+			REP(j,0,plen){
+				while( pri[j] <= in[i] && in[i] % pri[j] == 0  ){
+					v[i].PB(pri[j]);
+					in[i] /= pri[j];
+				}	
+				if( pri[j] > in[i] ) break;
 			}
-			while( a % pri[i] == 0 ){
-				x *= pri[i], a /= pri[i];
-			}
-			while( b % pri[i] == 0){
-				y *= pri[i], b /= pri[i];
-			}	
-			if( a < pri[i] && b < pri[i] ) break;
+			if( in[i] > 1 ) v[i].PB(in[i]);
 		}
-		if( a != b ){
-			if( a > 1 ) x *= a;
-			if( b > 1 ) y *= b;
+		int x =0, y =0;
+		int a = 1, b = 1;
+		while( x < (int) v[0].size() && y < (int) v[1].size()){
+			if( v[0][x] == v[1][y] ) x++, y++;
+			else if( v[0][x] < v[1][y]) a *= v[0][x], x++;
+			else if( v[0][x] > v[1][y]) b *= v[1][y], y++;
 		}
-		cout << (y + x) * 2 << endl;
+		
+		while( x < (int) v[0].size()){
+			a *= v[0][x]; x++;
+		}
+		while( y < (int) v[1].size()){
+			b *= v[1][y]; y++;
+		}		
+		cout << (a + b) * 2 << endl;
 	}
 	return 0;
 }

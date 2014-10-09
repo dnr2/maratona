@@ -1,3 +1,13 @@
+//http://www.spoj.com/problems/TAP2014C/
+//#tag geometry geometria 
+//$tag vector vetor 
+//$tag map mapa
+//#sol you should count the number of sides that have the same size and same angle with the axis, this can be done by
+// using a vector of the difference between points. since you have two equal vectors they will count as one possible
+// parallelogram. You should be careful when two vectors are equal but they were initially in the same line on the
+// 2D plane.
+
+
 #include <cstdio>
 #include <cstring>
 #include <string>
@@ -42,51 +52,59 @@ template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<
 
 
 struct pt{
-	double x, y;
-	pt( double x = 0, double y = 0): x(x), y(y) {}
+	ll x, y;
+	pt( ll x = 0, ll y = 0): x(x), y(y) {}
 	pt operator - ( pt & arg ){
 		return pt( x - arg.x, y - arg.y);
 	}
-	bool operator < ( const pt & arg) const {	
-		if( fabs(x -arg.x) < EPS && fabs( y - arg.y ) < EPS ) return false;
-		if( fabs(x - arg.x) < EPS ) return y < arg.y;
+	bool operator < ( const pt & arg) const {
+		if( y == arg.y ) return x < arg.x;
+		return y < arg.y;
+	}
+};
+
+struct st{
+	double x;
+	st( double x = 0) : x(x) {}
+	bool operator < ( const st & arg) const {
+		if( fabs( x - arg.x) < EPS) return false;
 		return x < arg.x;
 	}
 };
 
-double dot( pt a, pt b){
-	return a.x * b.x + a.y * b.y;
-}
-
 pt in[MAXN];
 
 int main(){
+	IOFAST();
 	int N; 	
 	while(cin >> N){
 		REP(i,0,N){
-			scanf("%lf%lf", &in[i].x , &in[i].y);
+			cin >> in[i].x >> in[i].y;
 		}
 		map<pt, int> m1;
-		map< pair<pt,pt> , int> m2; 
+		map< pair< pt, pair< bool, st > > , int> m2; 
 		REP(i,0,N){
 			REP(j,i+1,N){
 				pt aux = in[i] - in[j];
 				if( aux.x < 0 ) aux = pt(-aux.x, -aux.y);
-				if( fabs(aux.x) < EPS && aux.y < 0 ) aux = pt( aux.x, -aux.y);
+				if( aux.x == 0 && aux.y < 0 ) aux = pt( -aux.x, -aux.y);
 				m1[aux]++;
-				pt A = in[i] - in[j];
-				pt B = pt(0,0) - in[j];
-				double val = dot( A, B) / dot( A, A);
-				pt aux2 = pt( in[j].x + A.x * val, in[j].y + A.y * val);
-				m2[MP( aux, aux2)]++;
+				pt U = in[j] - in[i];
+				if( U.y == 0 ) {
+					double tmp = - ((double) in[i].x) / ((double)U.x);	
+					m2[ MP( aux, MP( false, st( ((double) in[i].y) + tmp * U.y )  ))]++;
+				} else {
+					double tmp = - ((double)in[i].y) / ((double)U.y);					
+					m2[ MP( aux, MP( true , st( ((double) in[i].x) + tmp * U.x ) ))]++;
+				}
 			}
 		}
 		ll resp =0;
 		for( map<pt , int>::iterator it = m1.begin(); it != m1.end(); it++){ 
 			ll aux = it->SD;			
 			resp +=  (aux* (aux-1)) / 2;
-		}
-		for( map< pair<pt,pt> , int>::iterator it = m2.begin(); it != m2.end(); it++){
+		}		
+		for( map< pair< pt, pair< bool, st > > , int>::iterator it = m2.begin(); it != m2.end(); it++){
 			ll aux = it->SD;
 			resp -=  (aux* (aux-1)) / 2;
 		}

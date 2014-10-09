@@ -43,9 +43,18 @@ typedef long long ll;
 #define EPS 1e-9
 #define INF 1e9
 
-struct GameOfSegments {
-    int winner(int N) {
-        return int(0);
+struct DifferentStrings {
+    int minimize(string A, string B) {
+		int n = A.size(), m = B.size();
+		int resp = 1e5;
+		REP(i,0,m-n+1){
+			int aux = 0;
+			REP(j,0,n){
+				if( A[j] != B[i+j]) aux++;
+			}
+			resp = min( resp, aux);
+		}
+        return resp;
     }
 };
 
@@ -127,62 +136,78 @@ namespace moj_harness {
 	int run_test_case(int casenum__) {
 		switch (casenum__) {
 		case 0: {
-			int N                     = 3;
+			string A                  = "koder";
+			string B                  = "topcoder";
 			int expected__            = 1;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = DifferentStrings().minimize(A, B);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 1: {
-			int N                     = 4;
+			string A                  = "hello";
+			string B                  = "xello";
 			int expected__            = 1;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = DifferentStrings().minimize(A, B);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 2: {
-			int N                     = 15;
-			int expected__            = 2;
+			string A                  = "abc";
+			string B                  = "topabcoder";
+			int expected__            = 0;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = DifferentStrings().minimize(A, B);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 3: {
-			int N                     = 191;
+			string A                  = "adaabc";
+			string B                  = "aababbc";
 			int expected__            = 2;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = DifferentStrings().minimize(A, B);
+			return verify_case(casenum__, expected__, received__, clock()-start__);
+		}
+		case 4: {
+			string A                  = "giorgi";
+			string B                  = "igroig";
+			int expected__            = 6;
+
+			std::clock_t start__      = std::clock();
+			int received__            = DifferentStrings().minimize(A, B);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 
 		// custom cases
 
-/*      case 4: {
-			int N                     = ;
-			int expected__            = ;
+      case 5: {
+			string A                  = "Ab";
+			string B                  = "aAb";
+			int expected__            = 0;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = DifferentStrings().minimize(A, B);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}*/
-/*      case 5: {
-			int N                     = ;
-			int expected__            = ;
-
-			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
-			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}*/
+		}
 /*      case 6: {
-			int N                     = ;
+			string A                  = ;
+			string B                  = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = GameOfSegments().winner(N);
+			int received__            = DifferentStrings().minimize(A, B);
+			return verify_case(casenum__, expected__, received__, clock()-start__);
+		}*/
+/*      case 7: {
+			string A                  = ;
+			string B                  = ;
+			int expected__            = ;
+
+			std::clock_t start__      = std::clock();
+			int received__            = DifferentStrings().minimize(A, B);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 		default:
@@ -206,55 +231,70 @@ int main(int argc, char *argv[]) {
 // BEGIN CUT HERE
 /**
 // PROBLEM STATEMENT
-// Rijél is a very wise teacher. He loves mathematics, especially games and geometry problems. Recently one of his students challenged him to the following game:
+// If X and Y are two strings of equal length N, then the difference between them is defined as the number of indices i where the i-th character of X and the i-th character of Y are different.  For example, the difference between the words "ant" and "art" is 1.
 
-Initially, there is a polygon with N vertices drawn in the plane. The polygon is strictly convex, i.e., each internal angle is strictly smaller than 180 degrees. The vertices of the polygon are numbered 1 through N, in clockwise order.
+You are given two strings, A and B, where the length of A is less than or equal to the length of B.  You can apply an arbitrary number of operations to A, where each operation is one of the following:
 
-Two players play the game on this polygon. The players take alternating turns. In each turn, the current player chooses a diagonal or a side of the polygon and draws it as a straight line segment. (A diagonal of the polygon is a line segment that connects any two non-adjacent vertices of the polygon.) The player is only allowed to choose a diagonal or a side that does not intersect any of the previously drawn segments (it must not share endpoints with any of them either). The player who cannot draw a diagonal or a side according to the above rules loses the game.
 
-You are given the int N.
+Choose a character c and add it to the beginning of A.
+Choose a character c and add it to the end of A.
 
-We assume that both players play the game optimally. Return 1 if the first player wins and 2 otherwise.
+
+Apply the operations in such a way that A and B have the same length and the difference between them is as small as possible.  Return this minimum possible difference.
 
 DEFINITION
-Class:GameOfSegments
-Method:winner
-Parameters:int
+Class:DifferentStrings
+Method:minimize
+Parameters:string, string
 Returns:int
-Method signature:int winner(int N)
+Method signature:int minimize(string A, string B)
 
 
 CONSTRAINTS
--N will be between 3 and 1,000, inclusive.
+-A and B will each contain between 1 and 50 characters, inclusive.
+-A and B will both contain only lowercase letters ('a'-'z').
+-The length of A will be less than or equal to the length of B.
 
 
 EXAMPLES
 
 0)
-3
+"koder"
+"topcoder"
 
 Returns: 1
 
-This polygon has zero diagonals and three sides. The first player will always win no matter which side he picks.
+You can prepend "top" to "koder" and you'll get "topkoder". The difference between "topkoder" and "topcoder" is 1.
 
 1)
-4
+"hello"
+"xello"
 
 Returns: 1
 
-This polygon has four sides and two diagonals. The first player wins the game if he takes one of the diagonals, because he will leave no choice for the second player.
+A and B already have the same length so you cannot add any characters to A.
 
 2)
-15
+"abc"
+"topabcoder"
 
-Returns: 2
+Returns: 0
 
 
 
 3)
-191
+"adaabc"
+"aababbc"
 
 Returns: 2
+
+
+
+4)
+"giorgi"
+"igroig"
+
+Returns: 6
 
 
 

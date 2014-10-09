@@ -25,8 +25,8 @@
 #define ull unsigned long long
 #define PII pair<int,int>
 #define PDD pair<double,double>
-#define F first
-#define S second
+#define FT first
+#define SD second
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
@@ -43,28 +43,24 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 100;
-const LL LLINF = 1e15LL;
+const int MAXN = 200000;
+
+ll sum[MAXN];
 
 int main(){
-	ll  n, a, b;
-	while( cin >> n >> a >> b){
-		if( a > b ) swap( a, b);
-		n *= 6;
-		if( a * b >= n){
-			cout << a * b << endl << a << " " << b << endl;
-		} else {
-			ll r = LLINF, ra = a, rb = b;
-			for(ll newa = a; newa * newa < n + 1; newa++){
-				ll newb = n / newa + (( n % newa > 0 )? 1 : 0)
-				if( newa * newb < r && newb >= b ){
-					r = newa * newb;
-					ra = newa;
-					rb = newb;
-				}
-			}
-			cout << r << endl << ra << " " << rb << endl;
-		}
+	IOFAST();
+	int n; cin >> n;
+	REP(i,0,n){
+		ll a; cin >> a;
+		sum[i] = a;
+		if( i > 0 ) sum[i] += sum[i-1];
 	}
+	int m; cin >> m;
+	REP(i,0,m){
+		ll a; cin >> a;
+		ll pos = lower_bound( sum, sum+n, a) - sum;
+		cout << (pos+1) << endl;
+	}
+	
 	return 0;
 }
