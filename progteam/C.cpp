@@ -46,6 +46,20 @@ template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<
 const int MAXN = 100;
 
 int main(){
-
+	IOFAST();
+	int n, k;
+	while( cin >> n >> k){
+		int p1 = 1, p2 = k + 1;
+		REP(i,1,k+2){			
+			if( i > 1) cout << " " ;
+			if( i & 1){
+				cout << p1; p1++;
+			} else {
+				cout << p2; p2--;
+			}
+		}
+		REP(i,k+2,n+1) cout << " " << i;
+		cout << endl;
+	}
 	return 0;
 }

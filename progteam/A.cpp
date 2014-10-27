@@ -45,7 +45,27 @@ template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<
 
 const int MAXN = 100;
 
-int main(){
+ll gdc( ll a, ll b) { 
+	while( b ){
+		a = a % b;
+		swap( a, b);
+	}
+	return a;
+}
 
+int main(){
+	ll l, r;
+	while( cin >> l >> r){
+		bool ok = false;
+		for(ll a = l; a <= r; a++) for( ll b = a+1; b <= r; b++) for( ll c = b+1; c <= r; c++){
+			if( gdc( a , b) == 1 && gdc( b,c) == 1 && gdc( a , c) != 1){
+				cout << a << " " << b << " " << c << endl; ok = true;
+				goto end;
+			}
+		}
+		end:
+		if( !ok )  cout << -1 << endl;
+	}
+	
 	return 0;
 }
