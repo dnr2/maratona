@@ -25,8 +25,8 @@
 #define ull unsigned long long
 #define PII pair<int,int>
 #define PDD pair<double,double>
-#define F first
-#define S second
+#define FT first
+#define SD second
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
@@ -37,38 +37,48 @@
 #define INF 0x3f3f3f3f
 #define IOFAST() ios_base::sync_with_stdio(0);cin.tie(0)
 #define FILL(x,v) memset(x,v,sizeof(x))
-
 // #define umap unordered_map
 
 using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 100;
+const int MAXN = 64800;
 
-int arr[3][5001], p[3];
+char s[10];
+PII in[MAXN], sum[4];;
 
 int main(){
-	IOFAST();
+	
 	int n;
-	while( cin >> n){		
-		FILL(arr,0);
-		FILL(p,0);
-		int w = INF;
+	while(scanf("%d", &n) > 0 && n){
+		FILL(sum,0);
 		REP(i,0,n){
-			int a; cin >> a;
-			a--;
-			arr[a][p[a]++] = i+1;
+			int a, b, c, val = 0;;
+			scanf("%d:%d:%d %s", &a, &b, &c, &s);
+			if( s[0] == 'E') val = 1;
+			if( s[0] == 'X') val = 2;
+			sum[val]++;
+			in[i] = MP( a * (60*60) + b * 60 + c , val);
 		}
-		REP(i,0,3) w = min( w, p[i]);
-		cout << w << endl;
-		REP(i,0,w){
-			REP(j,0,3){
-				if( j > 0) cout << " " ;
-				cout << arr[j][i];
+		sort( in, in + n);
+		REP(i,0,n){
+			if( in[i] == 0){
+				if( sum[1] < sum[2]) in[i] = 1, sum[1]++; 
+				else in[i] = 2, sum[2]++;
 			}
-			cout << endl;
 		}
+		int resp =0, val = 0, stacksz = 0;
+		REP(i,0,n){
+			if( in[i] == 1){			
+				stacksz++; val = 0;
+			} else {
+				stacksz--; val++;
+			}
+			resp = max(resp, val);
+		}
+		cout << resp << endl;
+		
 	}
 	
 	return 0;

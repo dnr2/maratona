@@ -27,7 +27,6 @@ int main(){
 		} else {
 			d = c - 'a' + 'A';
 		}
-		//printf("%c %c\n", c , d);
 		ok = true;
 		for( i = 0 ; str[i]; i++){
 			if( str[i] == ' ' && str[i+1] > 0){

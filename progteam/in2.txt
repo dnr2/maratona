@@ -1,4 +1,19 @@
-2 2
-2 1 3
-2 2 4
-0
+abcdefghij adcbefghij
+abcdefghij abcdefghij
+bcdaefghji beagfcdhji
+bcfghjdaei beagfcdhji
+bcfghjdaei bhjgfieacd
+bjdaeicfgh hbjgfieacd
+bjdacfghei hbjgfieacd
+bjdiacfghe hbjgfieacd
+bjdiacfghe hbjacgfied
+bjdiacfghe iehjacdbgf
+abcdefghij adcbefghji
+abcdefghij adchjibefg
+abcdefghij efgadchjib
+abcdefghij jaibhcgdfe 
+abcdefghij jheiacfdgb
+abcdefghij jhadbgecif
+abcdefghij bdafchejgi
+abcdefghij badfchejgi
+* *

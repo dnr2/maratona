@@ -1,6 +1,9 @@
-//
-//#tag
-//#sol
+//https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2869
+//#tag string
+//#tag construction construcao
+//#sol try all posible cases, as you can see the addition in the worst case wont be greater than 100000 because 
+//the right side will "overflow" and become zero, and then you can add as much as you want to make the right side
+//the reverse of the left side. (you can do it much faster considering calculating the jumps instead of iterating)
 
 #include <cstdio>
 #include <cstring>
@@ -25,8 +28,8 @@
 #define ull unsigned long long
 #define PII pair<int,int>
 #define PDD pair<double,double>
-#define F first
-#define S second
+#define FT first
+#define SD second
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
@@ -37,7 +40,6 @@
 #define INF 0x3f3f3f3f
 #define IOFAST() ios_base::sync_with_stdio(0);cin.tie(0)
 #define FILL(x,v) memset(x,v,sizeof(x))
-
 // #define umap unordered_map
 
 using namespace std;
@@ -46,29 +48,30 @@ template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<
 
 const int MAXN = 100;
 
-int arr[3][5001], p[3];
-
 int main(){
-	IOFAST();
-	int n;
-	while( cin >> n){		
-		FILL(arr,0);
-		FILL(p,0);
-		int w = INF;
-		REP(i,0,n){
-			int a; cin >> a;
-			a--;
-			arr[a][p[a]++] = i+1;
+	
+	string str;
+	while( cin >> str){
+		if( str == "0" ) break;
+		int sz = str.size();
+		int num = 0;
+		REP(i,0,sz){
+			num *= 10;
+			num += str[i] - '0';
 		}
-		REP(i,0,3) w = min( w, p[i]);
-		cout << w << endl;
-		REP(i,0,w){
-			REP(j,0,3){
-				if( j > 0) cout << " " ;
-				cout << arr[j][i];
+		int resp = 0;
+		do{
+			string a = tostr( num + resp );	
+			int sz2= a.size();
+			REP(i,0,sz - sz2 ){
+				a.insert(0,"0");
 			}
-			cout << endl;
-		}
+			string b = a;
+			reverse( b.begin(), b.end());			
+			if( a == b) break;
+			resp++;
+		} while( true );
+		cout << resp << endl;	
 	}
 	
 	return 0;

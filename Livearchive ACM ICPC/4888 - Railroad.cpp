@@ -49,9 +49,7 @@ bool back(int x, int y, bool isF, int e){
 
 
 int main(){
-	// freopen("in.txt", "r", stdin);
-	// freopen("out.txt", "w", stdout);
-	
+
 	while( scanf("%d%d", &n, &m) > 0 && n != 0){			
 		memset( pd, false, sizeof(pd));
 		for(i=0;i<n;i++){

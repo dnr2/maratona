@@ -54,9 +54,7 @@ void batle(){
 }
 
 int main(){
-	//freopen("in.txt", "r", stdin);
-	//freopen("out.txt", "w", stdout);
-	
+
 	while(scanf("%d %d %d %d", &n, &r, &c, &k)> 0 && n != 0){
 		memset(g, -1 , sizeof(g));
 		for( i = 1 ; i  <= r; i++){
@@ -70,13 +68,6 @@ int main(){
 			//printf("\n%d\n%d\n\n", k, d);
 		}
 		
-		// for( i = 1 ; i  <= r; i++){
-			// printf("%d", g[k%2][i][1]);
-			// for( j = 2 ; j  <= c; j++){
-				// printf(" %d", g[k%2][i][j]);
-			// }
-			// printf("\n");
-		// }
 	}
 	
 	return 0;
