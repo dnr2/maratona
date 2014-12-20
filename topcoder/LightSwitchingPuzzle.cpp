@@ -43,18 +43,23 @@ typedef long long ll;
 #define EPS 1e-9
 #define INF 1e9
 
-struct DifferentStrings {
-    int minimize(string A, string B) {		
-		int sa = A.size() , sb = B.size();
-		int resp = 10000;
-		REP(i,0,sb-sa+1){
+struct LightSwitchingPuzzle {
+    int minFlips(string state) {
+		map<int,bool> m;
+		int sz = state.size();		
+		REP(i,0,sz){
 			int cont = 0;
-			REP(j,0,sa){
-				if( A[j] != B[i+j]) cont++;
+			REP(j,1,i+1){
+				if( (i+1) % j == 0 && m.count(j) ){
+					cont++;
+				}
 			}
-			resp = min (resp ,cont);
+			if( ((state[i] == 'Y') && (cont & 1) == 0) ||
+				((state[i] == 'N') && (cont & 1) == 1)	){
+				m[i+1] = true;
+			}
 		}
-        return resp;
+        return (int) m.size();
     }
 };
 
@@ -136,78 +141,70 @@ namespace moj_harness {
 	int run_test_case(int casenum__) {
 		switch (casenum__) {
 		case 0: {
-			string A                  = "koder";
-			string B                  = "topcoder";
+			string state              = "YYYYYY";
 			int expected__            = 1;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = LightSwitchingPuzzle().minFlips(state);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 1: {
-			string A                  = "hello";
-			string B                  = "xello";
-			int expected__            = 1;
-
-			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
-			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}
-		case 2: {
-			string A                  = "abc";
-			string B                  = "topabcoder";
-			int expected__            = 0;
-
-			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
-			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}
-		case 3: {
-			string A                  = "adaabc";
-			string B                  = "aababbc";
+			string state              = "YNYNYNYNY";
 			int expected__            = 2;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = LightSwitchingPuzzle().minFlips(state);
+			return verify_case(casenum__, expected__, received__, clock()-start__);
+		}
+		case 2: {
+			string state              = "NNNNNNNNNN";
+			int expected__            = 0;
+
+			std::clock_t start__      = std::clock();
+			int received__            = LightSwitchingPuzzle().minFlips(state);
+			return verify_case(casenum__, expected__, received__, clock()-start__);
+		}
+		case 3: {
+			string state              = "YYYNYYYNYYYNYYNYYYYN";
+			int expected__            = 4;
+
+			std::clock_t start__      = std::clock();
+			int received__            = LightSwitchingPuzzle().minFlips(state);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 4: {
-			string A                  = "giorgi";
-			string B                  = "igroig";
-			int expected__            = 6;
+			string state              = "NYNNYNNNYNNNNYNNNNNYNNNNNNYNNNNNNNY";
+			int expected__            = 12;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = LightSwitchingPuzzle().minFlips(state);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 
 		// custom cases
 
 /*      case 5: {
-			string A                  = ;
-			string B                  = ;
+			string state              = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = LightSwitchingPuzzle().minFlips(state);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 /*      case 6: {
-			string A                  = ;
-			string B                  = ;
+			string state              = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = LightSwitchingPuzzle().minFlips(state);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 /*      case 7: {
-			string A                  = ;
-			string B                  = ;
+			string state              = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = LightSwitchingPuzzle().minFlips(state);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 		default:
@@ -231,70 +228,82 @@ int main(int argc, char *argv[]) {
 // BEGIN CUT HERE
 /**
 // PROBLEM STATEMENT
-// If X and Y are two strings of equal length N, then the difference between them is defined as the number of indices i where the i-th character of X and the i-th character of Y are different.  For example, the difference between the words "ant" and "art" is 1.
-
-You are given two strings, A and B, where the length of A is less than or equal to the length of B.  You can apply an arbitrary number of operations to A, where each operation is one of the following:
-
-
-Choose a character c and add it to the beginning of A.
-Choose a character c and add it to the end of A.
+// 
+Leo has N lights in a row.
+The lights are numbered 1 through N.
+Each light is either on or off.
 
 
-Apply the operations in such a way that A and B have the same length and the difference between them is as small as possible.  Return this minimum possible difference.
+
+Leo wants to turn all the lights off.
+He has N switches he may use.
+The switches are also numbered 1 through N.
+For each i, switch number i toggles the state of all lights whose numbers are multiples of i.
+(For example, switch 3 will toggle the state of light 3, light 6, light 9, and so on.)
+
+
+
+You are given the current state of all lights as a string state with N characters.
+For each valid i, state[i] is either 'Y' (meaning that light i+1 is currently on) or 'N' (meaning that the light is off).
+Determine the smallest number of switches Leo needs to press in order to turn off all the lights.
+If there is no way to turn off all the lights, return -1 instead.
+
 
 DEFINITION
-Class:DifferentStrings
-Method:minimize
-Parameters:string, string
+Class:LightSwitchingPuzzle
+Method:minFlips
+Parameters:string
 Returns:int
-Method signature:int minimize(string A, string B)
+Method signature:int minFlips(string state)
 
 
 CONSTRAINTS
--A and B will each contain between 1 and 50 characters, inclusive.
--A and B will both contain only lowercase letters ('a'-'z').
--The length of A will be less than or equal to the length of B.
+-state will contain between 1 and 1000 characters, inclusive.
+-Each character of state will be either 'Y' or 'N'.
 
 
 EXAMPLES
 
 0)
-"koder"
-"topcoder"
+"YYYYYY"
 
 Returns: 1
 
-You can prepend "top" to "koder" and you'll get "topkoder". The difference between "topkoder" and "topcoder" is 1.
+We can turn off all the lights by pressing switch 1.
 
 1)
-"hello"
-"xello"
-
-Returns: 1
-
-A and B already have the same length so you cannot add any characters to A.
-
-2)
-"abc"
-"topabcoder"
-
-Returns: 0
-
-
-
-3)
-"adaabc"
-"aababbc"
+"YNYNYNYNY"
 
 Returns: 2
 
 
+We cannot turn these lights off in a single step.
+It can be done in two steps.
+One possible solution looks as follows:
+First, press the second switch.
+This will toggle lights with numbers 2, 4, 6, and 8.
+The state of the lights after this change will be "YYYYYYYYY".
+Next, press the first switch to toggle all lightbulbs.
+
+
+2)
+"NNNNNNNNNN"
+
+Returns: 0
+
+All the lights are already off. 
+
+3)
+"YYYNYYYNYYYNYYNYYYYN"
+
+Returns: 4
+
+
 
 4)
-"giorgi"
-"igroig"
+"NYNNYNNNYNNNNYNNNNNYNNNNNNYNNNNNNNY"
 
-Returns: 6
+Returns: 12
 
 
 

@@ -43,16 +43,22 @@ typedef long long ll;
 #define EPS 1e-9
 #define INF 1e9
 
-struct DifferentStrings {
-    int minimize(string A, string B) {		
-		int sa = A.size() , sb = B.size();
-		int resp = 10000;
-		REP(i,0,sb-sa+1){
-			int cont = 0;
-			REP(j,0,sa){
-				if( A[j] != B[i+j]) cont++;
+struct ForgetfulAddition {
+    int minNumber(string expression) {
+		int sz = expression.size();
+		int resp = INF;
+		if( sz == 2) return (expression[0] - '0') + (expression[1] - '0');
+		REP(i,0,sz-1){
+			int a = 0, b =0;
+			REP(j,0,i+1){
+				a *= 10;
+				a += expression[j] - '0';
 			}
-			resp = min (resp ,cont);
+			REP(j,i+1,sz){
+				b *= 10;
+				b += expression[j] - '0';
+			}
+			resp= min( resp, a + b);
 		}
         return resp;
     }
@@ -136,78 +142,70 @@ namespace moj_harness {
 	int run_test_case(int casenum__) {
 		switch (casenum__) {
 		case 0: {
-			string A                  = "koder";
-			string B                  = "topcoder";
-			int expected__            = 1;
+			string expression         = "22";
+			int expected__            = 4;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = ForgetfulAddition().minNumber(expression);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 1: {
-			string A                  = "hello";
-			string B                  = "xello";
-			int expected__            = 1;
+			string expression         = "123";
+			int expected__            = 15;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = ForgetfulAddition().minNumber(expression);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 2: {
-			string A                  = "abc";
-			string B                  = "topabcoder";
-			int expected__            = 0;
+			string expression         = "1289";
+			int expected__            = 101;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = ForgetfulAddition().minNumber(expression);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 3: {
-			string A                  = "adaabc";
-			string B                  = "aababbc";
-			int expected__            = 2;
+			string expression         = "31415926";
+			int expected__            = 9067;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = ForgetfulAddition().minNumber(expression);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 4: {
-			string A                  = "giorgi";
-			string B                  = "igroig";
-			int expected__            = 6;
+			string expression         = "98765";
+			int expected__            = 863;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = ForgetfulAddition().minNumber(expression);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 
 		// custom cases
 
 /*      case 5: {
-			string A                  = ;
-			string B                  = ;
+			string expression         = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = ForgetfulAddition().minNumber(expression);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 /*      case 6: {
-			string A                  = ;
-			string B                  = ;
+			string expression         = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = ForgetfulAddition().minNumber(expression);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 /*      case 7: {
-			string A                  = ;
-			string B                  = ;
+			string expression         = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = ForgetfulAddition().minNumber(expression);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 		default:
@@ -231,70 +229,76 @@ int main(int argc, char *argv[]) {
 // BEGIN CUT HERE
 /**
 // PROBLEM STATEMENT
-// If X and Y are two strings of equal length N, then the difference between them is defined as the number of indices i where the i-th character of X and the i-th character of Y are different.  For example, the difference between the words "ant" and "art" is 1.
-
-You are given two strings, A and B, where the length of A is less than or equal to the length of B.  You can apply an arbitrary number of operations to A, where each operation is one of the following:
-
-
-Choose a character c and add it to the beginning of A.
-Choose a character c and add it to the end of A.
+// 
+Alice had two positive integers, a and b.
+She typed the expression "a+b" into her computer, but the '+' key malfunctioned.
+For example, instead of "128+9" the computer's screen now shows "1289".
 
 
-Apply the operations in such a way that A and B have the same length and the difference between them is as small as possible.  Return this minimum possible difference.
+
+Later, Bob saw the string on the screen.
+He knows that the '+' sign is missing but he does not know where it belongs.
+He now wonders what is the smallest possible result of Alice's original expression.
+
+
+
+For example, if Bob sees the string "1289", Alice's expression is either "128+9" or "12+89" or "1+289".
+These expressions evaluate to 137, 101, and 290.
+The smallest of those three results is 101.
+
+
+
+You are given a string expression that contains the expression on Alice's screen.
+Compute and return the smallest possible result after inserting the missing plus sign
+
 
 DEFINITION
-Class:DifferentStrings
-Method:minimize
-Parameters:string, string
+Class:ForgetfulAddition
+Method:minNumber
+Parameters:string
 Returns:int
-Method signature:int minimize(string A, string B)
+Method signature:int minNumber(string expression)
 
 
 CONSTRAINTS
--A and B will each contain between 1 and 50 characters, inclusive.
--A and B will both contain only lowercase letters ('a'-'z').
--The length of A will be less than or equal to the length of B.
+-expression will contain between 2 and 8 characters, inclusive.
+-Each character of expression will be between '1' and '9'.
 
 
 EXAMPLES
 
 0)
-"koder"
-"topcoder"
+"22"
 
-Returns: 1
+Returns: 4
 
-You can prepend "top" to "koder" and you'll get "topkoder". The difference between "topkoder" and "topcoder" is 1.
+The only possible expression Alice could have typed is "2+2". Thus, Bob knows this evaluates to 4.
 
 1)
-"hello"
-"xello"
+"123"
 
-Returns: 1
+Returns: 15
 
-A and B already have the same length so you cannot add any characters to A.
+The expression Alice has typed could have been "1+23" or "12+3". Of these two, the second is smaller, thus Bob will get the answer 15. 
 
 2)
-"abc"
-"topabcoder"
+"1289"
 
-Returns: 0
+Returns: 101
 
-
+This is the example from the problem statement.
 
 3)
-"adaabc"
-"aababbc"
+"31415926"
 
-Returns: 2
+Returns: 9067
 
 
 
 4)
-"giorgi"
-"igroig"
+"98765"
 
-Returns: 6
+Returns: 863
 
 
 

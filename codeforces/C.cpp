@@ -2,26 +2,11 @@
 //#tag
 //#sol
 
-#include <cstdio>
-#include <cstring>
-#include <string>
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <vector>
-#include <queue>
-#include <list>
-#include <stack>
-#include <map>
-#include <sstream>
-#include <climits>
-#include <set>
+#include<bits/stdc++.h>
 
 // #include <unordered_map>
 
-#define ll unsigned long long
+#define ll long long
 #define ull unsigned long long
 #define PII pair<int,int>
 #define PDD pair<double,double>
@@ -30,13 +15,13 @@
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
-#define DB(mod) cerr << #mod << " = " << mod << endl;
-#define _ << ", " << 
+#define DB(x) cerr << #x << " = " << x << endl;
+#define _ << ", " <<
 #define MP make_pair
 #define EPS 1e-9
 #define INF 0x3f3f3f3f
 #define IOFAST() ios_base::sync_with_stdio(0);cin.tie(0)
-#define FILL(mod,v) memset(mod,v,sizeof(mod))
+#define FILL(x,v) memset(x,v,sizeof(x))
 
 // #define umap unordered_map
 
@@ -44,43 +29,51 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 100;
+const int MAXN = 200;
 
-
-
+string in[MAXN];
+int rem[MAXN];
 
 int main(){
 	IOFAST();
-	string s;
-	while( cin >> s){
-		int sz = s.size();	
-		ll a, b;
-		cin >> a >>b;
-		map<int,int> pos;
-		ll mod = 0;		
-		REP(i,0,sz){
-			mod = ((((mod%a) * (10%a)) %a) + ((s[i]-'0')%a)) % a;			
-			if( mod == 0) pos[i]++;
-		}		
-		mod = 0; ll ten = 1 % b;
-		for(int i = sz-1; i >= 1; i--){
-			mod = (((((s[i]-'0')%b) * ten) % b ) + (mod%b)) % b;			
-			ten = (ten * (10%b)) % b;			
-			if( mod == 0 && s[i] != '0') pos[i-1]++;			
-		}
-		bool ok = false;
-		for( map<int,int>::iterator p = pos.begin(); p != pos.end(); p++){
-			if( p->S > 1){
-				ok = true;
-				cout << "YES" << endl;
-				cout << s.substr( 0, p->F + 1) << endl << s.substr( p->F + 1, sz - p->F + 1) << endl;
-				break;
-			}
-		}
-		if( !ok ){
-			cout << "NO" << endl; 
-		}
-		
+	int n,m; cin >> n >> m;
+	REP(i,0,n){
+		cin >> in[i];
 	}
+	int resp = 0;
+	// DB( n _ m);
+	REP(k,0,m){
+		string a = "", b = "";
+		bool ok = true;
+		REP(j,0,m){
+			if( !rem[j] ) a += in[0][j];
+		}
+		REP(i,1,n){
+			b = "";
+			REP(j,0,m){
+				if( !rem[j] ) b += in[i][j];
+			}
+			// DB( k _ i _ a _ b );
+			if( a > b){
+				ok = false;
+				int x = 0;
+				REP(pos,0,m){
+					if( rem[pos]) continue;
+					if( a[x] > b[x] ) {
+						// DB( pos );
+						rem[pos] = 1; break;
+					}
+					x++;
+				}
+			}
+			a = b;
+			if( ok == false ) break;
+		}
+		if(ok){
+			break;
+		}
+		resp++;
+	}
+	cout << resp << endl;
 	return 0;
 }

@@ -2,22 +2,7 @@
 //#tag
 //#sol
 
-#include <cstdio>
-#include <cstring>
-#include <string>
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <vector>
-#include <queue>
-#include <list>
-#include <stack>
-#include <map>
-#include <sstream>
-#include <climits>
-#include <set>
+#include<bits/stdc++.h>
 
 // #include <unordered_map>
 
@@ -31,7 +16,7 @@
 #define PB push_back
 #define PI acos(-1)
 #define DB(x) cerr << #x << " = " << x << endl;
-#define _ << ", " << 
+#define _ << ", " <<
 #define MP make_pair
 #define EPS 1e-9
 #define INF 0x3f3f3f3f

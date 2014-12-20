@@ -1,0 +1,3 @@
+Comparing files ok.txt and OUT.TXT
+FC: no differences encountered
+

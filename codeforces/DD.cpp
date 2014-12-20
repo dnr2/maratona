@@ -46,7 +46,7 @@ int main(){
 		}
 		vector<int> fat;
 		for(int i = 1; i<= cont;i++){
-			// DB( num _ i);
+			DB( num _ i);
 			fat.PB( i );
 		}
 		int sz = fat.size();
@@ -66,7 +66,7 @@ int main(){
 					sum[0] = sum[1] = 0;
 				}
 			}
-			// if( fat[k] == 3) DB( vic[0] _ vic[1]);
+			if( fat[k] == 3) DB( vic[0] _ vic[1]);
 			if( sum[1] > 0 || sum[0] > 0) continue;
 			if( vic[0] > vic[1]){
 				resp.PB( MP( vic[0] , fat[k] ));

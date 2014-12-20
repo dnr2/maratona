@@ -37,20 +37,51 @@ int num[MAXN];
 int main(){
 	IOFAST();
 	int n; cin >> n;
-	string s; cin >> s;
-	vector<string> v;
-	REP(i,0,n){
-		string cur = "";
-		int pos = (i + 1) % n;
-		cur += '0';
-		int sum = (10 - (s[i]-'0')) % 10;
-		while( pos != i){
-			cur += (((s[pos]-'0')+sum) % 10)+'0';
-			pos = (pos + 1) % n;
+	int b; cin >>b;
+	int pot = 1;
+	REP(i,1,n) pot *= 10;
+	// DB( pot);
+	queue<int> q;
+	mark[b] = true;
+	q.push( b);
+	int resp = INF;
+	while( !q.empty()){
+		int cur = q.front(); q.pop();
+		// DB( cur );
+		int aux = cur;
+		REP(i,0,n){
+			num[i] = aux % 10;
+			aux /= 10;
 		}
-		v.push_back(cur);
+		int f = cur % 10;
+		int next = (cur /10) + ( pot * f);
+		// DB( cur _ next );
+		if( !mark[next]){
+			mark[next] = 1;
+			resp = min(resp, next);
+			q.push( next);
+		}
+		next = 0;
+		for(int i = n-1;i >=0 ; i--){
+			num[i] = (num[i]+1) % 10;
+			next *= 10;
+			next += num[i];
+		}
+		// DB( cur _ next );
+		if( !mark[next]){
+			mark[next] = 1;
+			resp = min(resp, next);
+			q.push( next);
+		}
 	}
-	sort(v.begin(), v.end());
-	cout << v[0] << endl;
+	int aux = resp;
+	REP(i,0,n){
+		num[i] = aux % 10;
+		aux /= 10;
+	}
+	for(int i = n-1; i >= 0; i--){
+		cout << num[i];
+	}
+	cout << endl;
 	return 0;
 }

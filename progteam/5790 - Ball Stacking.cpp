@@ -43,9 +43,29 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 3000;
+const int MAXN = 2000;
+
+ll in[MAXN][MAXN];
+ll dp[MAXN][MAXN];
+ll n; 
+
+ll go(ll y, ll x){
+	if( y >= n ) return 0;	
+	if( dp[y][x] >= 0 ) return dp[y][x];	
+	return dp[y][x] = max( max( in[y][x], 0LL) , in[y][x] + go( y+1, x) + go(y+1,x+1) - go(y+2,x+1) );	
+}
 
 int main(){
-		
+	IOFAST();
+	while( cin >> n ){
+		if( n == 0) break;
+		REP(i,0,n) {
+			REP(j,0,i+1){
+				cin >> in[i][j] ;				
+			}
+		}
+		FILL(dp,-1LL);
+		cout << go( 0, 0 ) << endl;		
+	}
 	return 0;
 }

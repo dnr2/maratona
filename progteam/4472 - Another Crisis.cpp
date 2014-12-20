@@ -1,4 +1,4 @@
-//
+//https://icpcarchive.ecs.baylor.edu/index.php?option=onlinejudge&page=show_problem&problem=2473
 //#tag
 //#sol
 
@@ -43,9 +43,42 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 3000;
+const int MAXN = 200000;
+
+vector<int> adj[MAXN];
+int par[MAXN];
+int n, t;
+
+
+int dfs(int node ){	
+	if( adj[node].size() == 0) return 1;
+	int ret = 0;
+	vector<int> aux;
+	REP(i,0,(int)adj[node].size()){
+		aux.PB( dfs( adj[node][i]));		
+	}
+	sort( aux.begin(), aux.end());
+	int sz = adj[node].size();
+	sz *= t; sz = (sz / 100) + ((sz % 100) > 0);	
+	REP(i,0,sz){
+		ret += aux[i];
+	}	
+	return ret;
+}
 
 int main(){
+	IOFAST();	
+	while( cin >> n >> t){
+		if( !(n||t)) break;
+		REP(i,0,n+1) adj[i].clear();
 		
+		REP(i,1,n+1){
+			int a; cin >> a;
+			par[i] = a;
+			adj[a].PB( i );			
+		}		
+		cout <<  dfs( 0 ) << endl;
+	}
+	
 	return 0;
 }

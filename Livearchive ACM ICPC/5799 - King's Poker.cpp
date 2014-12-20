@@ -14,10 +14,6 @@ int i, j, k, a, b, c, n, m;
 bool crivo[1100000];
 int hand[3];
 int main(){
-
-	//freopen("in.txt", "r", stdin);
-	//freopen("out.txt", "w", stdout);
-	
 	
 	while(scanf( "%d %d %d", &a, &b , &c) > 0 && a != 0 || b != 0 || c != 0){
 		if( a == b && a == c && b == c){

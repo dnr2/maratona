@@ -1,3 +1,75 @@
-1
-2
-4
+Case 1: 3
+AAAEE
+AAAHE
+AAAHF
+AAAHF
+.G...
+Case 2: 3
+....................
+...B................
+..BBBB..............
+..BBBBBB............
+.BBBBBBB............
+BBBBBBBBBBBBBBBBB...
+BBBBBBBBBBBBBBBBB...
+.BBBBBBBBBBBBBB.....
+..BBBBBBBBBBBB......
+.BBBBBBBBBBB........
+..BBBBBBBBBB..BBB...
+...BBBBBBBBBBBBBB...
+..BBBBBBBBBBBBBBB...
+...BBBBBBBBB.BBB.II.
+...BBBBBBBB..BBBBII.
+...BBBBBB....BBBBMII
+...BBBBBBB....BBB...
+...............BB...
+................BB..
+.................B..
+Case 3: 2
+..........
+.AAAAAAAAA
+.AA.....AA
+AAADDDDDAA
+AA.DDDDD.A
+A..DDDDD.A
+AA.DDDDD.A
+AA.DDDDDAA
+.AAAA..AA.
+...A......
+Case 4: 3
+..........
+.AAAAAAAAA
+.AA.....AA
+AAADDDDDAA
+AA.DDDDD.A
+A..DDDDD.A
+AA.DDDDD.A
+AA.DDDDDAA
+.AAAAFFAA.
+...AFFFF..
+Case 5: 4
+........
+.AAACC..
+.AAACC..
+.ABBCC..
+.ABBDD..
+.ABBDA..
+.AAAAAA.
+Case 6: 3
+AABB
+.CC.
+Case 7: 1
+..BB
+....
+CC..
+...D
+Case 8: 2
+AABB
+A..B
+C..D
+CCDD
+Case 9: 2
+A..B
+...B
+C..D
+CCDD

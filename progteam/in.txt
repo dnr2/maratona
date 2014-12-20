@@ -1,20 +1,96 @@
-4 
-07:22:03 X 
-07:13:22 E
-08:30:51 E
-21:59:02 X
-4 
-09:00:00 E
-20:00:01 X
-09:05:00 ?
-20:00:00 ?
-8 
-10:21:00 E
-10:25:00 X
-10:23:00 E
-10:24:00 X
-10:26:00 X
-10:27:00 ?
-10:22:00 ?
-10:20:00 ?
-0
+12
+5 5
+AAAEE
+ABAHE
+A.AHF
+AAAHF
+.G...
+20 20
+....................
+...B................
+..BBBB..............
+..B..BBB............
+.BB....B............
+BBB....BBBBBBBBBB...
+BBB........SS.BBB...
+.BB........SSBB.....
+..B.....D..BBB......
+.BB....DDD.B........
+..BB.......B..BBB...
+...B.......BBBBBB...
+..BB.......BBBCBB...
+...B.KK...BB.BCB.II.
+...B.K..BBB..BCBBII.
+...BBBBBB....BBBBMII
+...BBBBBBB....BBB...
+...............BB...
+................BB..
+.................B..
+10 10
+..........
+.AAAAAAAAA
+.AA.....AA
+AAADDDDDAA
+AA.DD.DD.A
+A..D.C.D.A
+AA.D..DD.A
+AA.DDDDDAA
+.AAAA..AA.
+...A......
+10 10
+..........
+.AAAAAAAAA
+.AA.....AA
+AAADDDDDAA
+AA.DD.DD.A
+A..D.C.D.A
+AA.D..DD.A
+AA.DDDDDAA
+.AAAAFFAA.
+...AFFFF..
+7 8
+........
+.AAACC..
+.AAACC..
+.ABBCC..
+.ABBDD..
+.ABBDA..
+.AAAAAA.
+2 4
+AABB
+.CC.
+4 4
+..BB
+....
+CC..
+...D
+4 4
+AABB
+A..B
+C..D
+CCDD
+4 4
+A..B
+...B
+C..D
+CCDD
+6 21
+......AAAAAAAAAA..... 
+..AAAAAA.....AAAAAAAA     
+...AAAFFFFMMMFAA.B.AA          
+..GGAAH..P...CCAAAAA.        
+.GG..AAAAAAAAAAAF....
+..GGGG....FFFFFFF....
+2 2
+A.
+..
+9 8
+........
+X....YZ.
+........
+.AAACC..
+.AAACC..
+.ABBCC..
+.ABBDD..
+.ABBDA..
+.AAAAAA.

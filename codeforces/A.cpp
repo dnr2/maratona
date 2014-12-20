@@ -2,22 +2,7 @@
 //#tag
 //#sol
 
-#include <cstdio>
-#include <cstring>
-#include <string>
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <vector>
-#include <queue>
-#include <list>
-#include <stack>
-#include <map>
-#include <sstream>
-#include <climits>
-#include <set>
+#include<bits/stdc++.h>
 
 // #include <unordered_map>
 
@@ -31,7 +16,7 @@
 #define PB push_back
 #define PI acos(-1)
 #define DB(x) cerr << #x << " = " << x << endl;
-#define _ << ", " << 
+#define _ << ", " <<
 #define MP make_pair
 #define EPS 1e-9
 #define INF 0x3f3f3f3f
@@ -44,32 +29,20 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 100;
-
-int arr[3][5001], p[3];
-
+const int MAXN = 1000;
+int in[MAXN];
 int main(){
-	IOFAST();
-	int n;
-	while( cin >> n){		
-		FILL(arr,0);
-		FILL(p,0);
-		int w = INF;
-		REP(i,0,n){
-			int a; cin >> a;
-			a--;
-			arr[a][p[a]++] = i+1;
+	int n; cin >> n;
+	REP(i,0,n) cin >> in[i];
+	int resp = INF;
+	REP(k,1,n-1){
+		int dif = 0;
+		REP(i,1,n){
+			if( i-1 == k) dif = max( dif, in[i] - in[i-2]);
+			else dif = max( dif, in[i] - in[i-1]);
 		}
-		REP(i,0,3) w = min( w, p[i]);
-		cout << w << endl;
-		REP(i,0,w){
-			REP(j,0,3){
-				if( j > 0) cout << " " ;
-				cout << arr[j][i];
-			}
-			cout << endl;
-		}
+		resp = min( resp, dif);
 	}
-	
+	cout << resp << endl;
 	return 0;
 }
