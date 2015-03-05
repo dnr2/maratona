@@ -1,7 +1,3 @@
-//
-//#tag
-//#sol
-
 #include<bits/stdc++.h>
 
 // #include <unordered_map>
@@ -10,8 +6,8 @@
 #define ull unsigned long long
 #define PII pair<int,int>
 #define PDD pair<double,double>
-#define F first
-#define S second
+#define FT first
+#define SD second
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
@@ -29,19 +25,43 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 1000;
-int in[MAXN];
+const int maxn = 100;
+
+int dx[] = {0,1,0,-1};
+int dy[] = {-1,0,1,0};
+const ll mod = 1000000007;
+
 int main(){
-	int n; cin >> n;
-	REP(i,0,n) cin >> in[i];
-	int resp = INF;
-	REP(k,1,n-1){
-		int dif = 0;
-		REP(i,1,n){
-			if( i-1 == k) dif = max( dif, in[i] - in[i-2]);
-			else dif = max( dif, in[i] - in[i-1]);
+	
+	IOFAST();
+	string str;
+	int sz; cin >> sz;
+	cin >> str;	
+	map<char,int> m;
+	vector< pair<int,char> > v;
+	REP(i,0,sz){
+		m[str[i]]++;
+	}
+	v.PB( MP(m['A'], 'A'));
+	v.PB( MP(m['C'], 'C'));
+	v.PB( MP(m['G'], 'G'));
+	v.PB( MP(m['T'], 'T'));
+	
+	sort( v.begin(),v.end(), greater< pair<int,char> >() );
+
+	ll cont = 1;
+	REP(i,1,4){
+		if( v[i].FT == v[i-1].FT){
+			cont++;
+		} else {
+			break;
 		}
-		resp = min( resp, dif);
+	}	
+	ll resp = 1;
+
+	REP(i,0,sz){
+		resp *= cont;
+		resp = resp % mod;
 	}
 	cout << resp << endl;
 	return 0;

@@ -43,18 +43,9 @@ typedef long long ll;
 #define EPS 1e-9
 #define INF 1e9
 
-struct DifferentStrings {
-    int minimize(string A, string B) {		
-		int sa = A.size() , sb = B.size();
-		int resp = 10000;
-		REP(i,0,sb-sa+1){
-			int cont = 0;
-			REP(j,0,sa){
-				if( A[j] != B[i+j]) cont++;
-			}
-			resp = min (resp ,cont);
-		}
-        return resp;
+struct CartInSupermarketEasy {
+    int calc(int N, int K) {
+        return int(0);
     }
 };
 
@@ -136,78 +127,87 @@ namespace moj_harness {
 	int run_test_case(int casenum__) {
 		switch (casenum__) {
 		case 0: {
-			string A                  = "koder";
-			string B                  = "topcoder";
-			int expected__            = 1;
+			int N                     = 5;
+			int K                     = 0;
+			int expected__            = 5;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = CartInSupermarketEasy().calc(N, K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 1: {
-			string A                  = "hello";
-			string B                  = "xello";
-			int expected__            = 1;
+			int N                     = 5;
+			int K                     = 2;
+			int expected__            = 4;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = CartInSupermarketEasy().calc(N, K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 		case 2: {
-			string A                  = "abc";
-			string B                  = "topabcoder";
-			int expected__            = 0;
-
-			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
-			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}
-		case 3: {
-			string A                  = "adaabc";
-			string B                  = "aababbc";
-			int expected__            = 2;
-
-			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
-			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}
-		case 4: {
-			string A                  = "giorgi";
-			string B                  = "igroig";
+			int N                     = 15;
+			int K                     = 4;
 			int expected__            = 6;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = CartInSupermarketEasy().calc(N, K);
+			return verify_case(casenum__, expected__, received__, clock()-start__);
+		}
+		case 3: {
+			int N                     = 7;
+			int K                     = 100;
+			int expected__            = 4;
+
+			std::clock_t start__      = std::clock();
+			int received__            = CartInSupermarketEasy().calc(N, K);
+			return verify_case(casenum__, expected__, received__, clock()-start__);
+		}
+		case 4: {
+			int N                     = 45;
+			int K                     = 5;
+			int expected__            = 11;
+
+			std::clock_t start__      = std::clock();
+			int received__            = CartInSupermarketEasy().calc(N, K);
+			return verify_case(casenum__, expected__, received__, clock()-start__);
+		}
+		case 5: {
+			int N                     = 100;
+			int K                     = 100;
+			int expected__            = 8;
+
+			std::clock_t start__      = std::clock();
+			int received__            = CartInSupermarketEasy().calc(N, K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}
 
 		// custom cases
 
-/*      case 5: {
-			string A                  = ;
-			string B                  = ;
-			int expected__            = ;
-
-			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
-			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}*/
 /*      case 6: {
-			string A                  = ;
-			string B                  = ;
+			int N                     = ;
+			int K                     = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = CartInSupermarketEasy().calc(N, K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 /*      case 7: {
-			string A                  = ;
-			string B                  = ;
+			int N                     = ;
+			int K                     = ;
 			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
-			int received__            = DifferentStrings().minimize(A, B);
+			int received__            = CartInSupermarketEasy().calc(N, K);
+			return verify_case(casenum__, expected__, received__, clock()-start__);
+		}*/
+/*      case 8: {
+			int N                     = ;
+			int K                     = ;
+			int expected__            = ;
+
+			std::clock_t start__      = std::clock();
+			int received__            = CartInSupermarketEasy().calc(N, K);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
 		}*/
 		default:
@@ -231,70 +231,83 @@ int main(int argc, char *argv[]) {
 // BEGIN CUT HERE
 /**
 // PROBLEM STATEMENT
-// If X and Y are two strings of equal length N, then the difference between them is defined as the number of indices i where the i-th character of X and the i-th character of Y are different.  For example, the difference between the words "ant" and "art" is 1.
+// You have a sequence that consists of N shopping carts.
+You want to remove all of them as quickly as possible.
 
-You are given two strings, A and B, where the length of A is less than or equal to the length of B.  You can apply an arbitrary number of operations to A, where each operation is one of the following:
+The process of removing the carts will consist of one or more turns.
+Each turn will take exactly one minute.
+At the beginning of each turn, you will have some sequences of carts.
+For each of those sequences you can choose between two options:
+
+split it (in an arbitrary place) into two shorter sequences
+remove one shopping cart from the sequence
 
 
-Choose a character c and add it to the beginning of A.
-Choose a character c and add it to the end of A.
+There is one additional constraint: during the entire process you can only choose to split a sequence at most K times.
 
-
-Apply the operations in such a way that A and B have the same length and the difference between them is as small as possible.  Return this minimum possible difference.
+You are given the ints N and K.
+Compute and return the smallest number of minutes in which it is possible to remove all the carts.
 
 DEFINITION
-Class:DifferentStrings
-Method:minimize
-Parameters:string, string
+Class:CartInSupermarketEasy
+Method:calc
+Parameters:int, int
 Returns:int
-Method signature:int minimize(string A, string B)
+Method signature:int calc(int N, int K)
 
 
 CONSTRAINTS
--A and B will each contain between 1 and 50 characters, inclusive.
--A and B will both contain only lowercase letters ('a'-'z').
--The length of A will be less than or equal to the length of B.
+-N will be between 1 and 100, inclusive.
+-K will be between 0 and 100, inclusive.
 
 
 EXAMPLES
 
 0)
-"koder"
-"topcoder"
+5
+0
 
-Returns: 1
+Returns: 5
 
-You can prepend "top" to "koder" and you'll get "topkoder". The difference between "topkoder" and "topcoder" is 1.
+As K=0, you can never split any sequence. In each turn you have to remove one cart from your sequence. Hence, it will take 5 minutes to remove all 5 carts.
 
 1)
-"hello"
-"xello"
+5
+2
 
-Returns: 1
+Returns: 4
 
-A and B already have the same length so you cannot add any characters to A.
+One optimal solution: {5} -> {2,3} -> {1,2} -> {1,1} -> {}. We used two splits: once when splitting the sequence of 5 carts into 2+3 and the second time when  splitting the sequence of 2 carts into 1+1.
 
 2)
-"abc"
-"topabcoder"
+15
+4
 
-Returns: 0
+Returns: 6
 
 
 
 3)
-"adaabc"
-"aababbc"
+7
+100
 
-Returns: 2
+Returns: 4
 
-
+You don't have to split exactly K times.
 
 4)
-"giorgi"
-"igroig"
+45
+5
 
-Returns: 6
+Returns: 11
+
+
+
+5)
+100
+100
+
+Returns: 8
 
 
 

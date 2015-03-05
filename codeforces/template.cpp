@@ -1,7 +1,3 @@
-//
-//#tag
-//#sol
-
 #include<bits/stdc++.h>
 
 // #include <unordered_map>
@@ -10,8 +6,8 @@
 #define ull unsigned long long
 #define PII pair<int,int>
 #define PDD pair<double,double>
-#define F first
-#define S second
+#define FT first
+#define SD second
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
@@ -29,7 +25,7 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 100;
+const int maxn = 100;
 
 int main(){
 

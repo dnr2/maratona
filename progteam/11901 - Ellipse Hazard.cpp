@@ -1,5 +1,5 @@
-//
-//#tag
+//http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=3052
+//#tag geometry 
 //#sol
 
 #include <cstdio>

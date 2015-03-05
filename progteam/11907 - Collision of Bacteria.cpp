@@ -1,5 +1,6 @@
-//
-//#tag
+//http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=3058 
+//#tag binary search
+//#tag geometry
 //#sol
 
 #include <cstdio>

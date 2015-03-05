@@ -44,15 +44,15 @@ typedef long long ll;
 #define INF 1e9
 
 struct DifferentStrings {
-    int minimize(string A, string B) {
-		int n = A.size(), m = B.size();
-		int resp = 1e5;
-		REP(i,0,m-n+1){
-			int aux = 0;
-			REP(j,0,n){
-				if( A[j] != B[i+j]) aux++;
+    int minimize(string A, string B) {		
+		int sa = A.size() , sb = B.size();
+		int resp = 10000;
+		REP(i,0,sb-sa+1){
+			int cont = 0;
+			REP(j,0,sa){
+				if( A[j] != B[i+j]) cont++;
 			}
-			resp = min( resp, aux);
+			resp = min (resp ,cont);
 		}
         return resp;
     }
@@ -183,15 +183,15 @@ namespace moj_harness {
 
 		// custom cases
 
-      case 5: {
-			string A                  = "Ab";
-			string B                  = "aAb";
-			int expected__            = 0;
+/*      case 5: {
+			string A                  = ;
+			string B                  = ;
+			int expected__            = ;
 
 			std::clock_t start__      = std::clock();
 			int received__            = DifferentStrings().minimize(A, B);
 			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}
+		}*/
 /*      case 6: {
 			string A                  = ;
 			string B                  = ;

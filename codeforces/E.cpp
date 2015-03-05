@@ -29,9 +29,43 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 100;
+const int MAXN = 300000;
+
+vector<PII> adj[MAXN];
+int cost[MAXN];
+int pai[MAXN];
 
 int main(){
-
+	IOFAST();
+	int n , m; cin >> n >> m;
+	REP(i,0,m) {
+		int a,b,c;
+		cin >> a >> b >> c;
+		adj[a].PB( MP( b, c) );
+		adj[b].PB( MP( a, c) );
+	}
+	FILL(cost, INF);
+	cost[0] = 0;
+	queue<int> q;
+	q.push( 0);
+	int mindist = 0;
+	while(!q.empty()){
+		int cur = q.front(); q.pop();
+		if( cur == n-1) {
+			mindist = cost[cur];
+			break;
+		}
+		REP(i,0,(int) adj[cur].size()){
+			int next = adj[cur][i];
+			if( dist[next] < INF) continue;
+			dist[next] = dist[cur] + 1;
+			q.push( next );
+		}
+	}
+	FILL( cost, INF);
+	priority_queue<PII> heap;
+	heap.push( PII( 0, 0) );
+	cost[0] = 
+	
 	return 0;
 }

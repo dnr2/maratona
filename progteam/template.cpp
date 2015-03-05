@@ -43,9 +43,9 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 3000;
+const int maxn = 1000;
 
 int main(){
-		
+
 	return 0;
 }

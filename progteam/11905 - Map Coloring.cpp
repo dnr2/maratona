@@ -22,14 +22,18 @@ int dy[] = {-1,0,1,0};
 int mat[MAXNODES][MAXNODES];
 int color[MAXNODES];
 
-// vector<int> adj[MAXNODES];
-// int pai[MAXNODES];
+vector<int> adj[MAXNODES];
+int pai[MAXNODES];
 
 
-// int findp(int x){
-	// if( pai[x] == x) return x;
-	// return pai[x] = findp( pai[x]);
-// }
+int findp(int x){
+	if( pai[x] == x) return x;
+	return pai[x] = findp( pai[x]);
+}
+
+int dfs( int node, int p){
+	
+}
 
 
 void printMap(int pos){
@@ -169,8 +173,8 @@ int main(){
 					}
 				}
 			
-				// REP(i,0,sz+1) adj[i].clear();
-				// REP(i,0,sz) pai[i] = i;
+				REP(i,0,sz+1) adj[i].clear();
+				REP(i,0,sz) pai[i] = i;
 				
 				
 				int count3 = 0;				
@@ -208,14 +212,17 @@ int main(){
 					}
 				}
 				
-				// FILL(color,-1);
-				// color[0] = 0;
-				// if( dfs( 0 , -1, -1)){
-					// numcoloring = 3; goto printans;
-				// } else {					
-					// numcoloring = 4; goto printans;
-				// }
+				FILL(color,-1);
+				REP(i,0,n){
+					if( color[i] == -1){
+						color[i] = 0;
+						if( dfs( i , -1) == -1 ){
+							numcoloring = 4; goto printans;
+						}
+					}
+				}
 				
+				numcoloring = 3; goto printans;
 			}
 			
 		} 

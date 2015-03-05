@@ -1,7 +1,3 @@
-//
-//#tag
-//#sol
-
 #include<bits/stdc++.h>
 
 // #include <unordered_map>
@@ -9,9 +5,10 @@
 #define ll long long
 #define ull unsigned long long
 #define PII pair<int,int>
+#define I4 pair< PII , PII >
 #define PDD pair<double,double>
-#define F first
-#define S second
+#define FT first
+#define SD second
 #define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
 #define PB push_back
 #define PI acos(-1)
@@ -29,54 +26,103 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int MAXN = 101000;
+const int maxn = 2100;
+char in[maxn][maxn];
+int dx[] = {0,1,0,-1};
+int dy[] = {-1,0,1,0};
 
-int in[MAXN];
+int n, m;
+
+PII go( int i, int j){
+
+	PII pos; int cont = 0;
+	pos = MP(-1,-1);
+	if( in[i][j] == '*') return pos;
+	REP(kk,0,4){
+		int ni = i + dy[kk];
+		int nj = j + dx[kk];
+		if( ni < 0 || ni >= n || nj < 0 || nj >= m ) continue;
+		if( in[ni][nj] == '.'){
+			pos = PII( ni, nj );
+			cont++;
+		}
+	}
+	if( cont == 1){
+		in[i][j] = in[pos.FT][pos.SD] = '*';
+		return pos;
+	}
+	return PII(-1,-1);
+}
 
 int main(){
+
 	
-	int n;
-	cin >> n;
-	REP(i,0,n) cin >> in[i];
-	vector<PII> resp;
-	REP(num,1,3){
-		int cont = 0;
-		REP(i,0,n){
-			if( in[i] == num) cont++;
-		}
-		vector<int> fat;
-		for(int i = 1; i<= cont;i++){
-			// DB( num _ i);
-			fat.PB( i );
-		}
-		int sz = fat.size();
-		REP(k,0,sz){
-			int sum[] = {0,0}, vic[] = {0,0};
-			REP(i,0,n){
-				if( in[i] == num){
-					sum[0]++;
-				} else {
-					sum[1]++;
+	cin >> n >> m;
+	REP(i,0,n){
+		scanf("%s", in[i]);
+	}
+	queue< I4 > q;
+	REP(i,0,n){
+		REP(j,0,m){
+			if( ((i + j) & 1) == 0 && in[i][j] == '.'){
+
+				PII ret = go( i, j);
+				if( ret.FT != -1){
+					q.push( MP( PII(i,j), ret ) );
+	
 				}
-				if( sum[1] == fat[k]){
-					vic[1]++;
-					sum[0] = sum[1] = 0;
-				} else if( sum[0] == fat[k]){
-					vic[0]++;
-					sum[0] = sum[1] = 0;
-				}
-			}
-			// if( fat[k] == 3) DB( vic[0] _ vic[1]);
-			if( sum[1] > 0 || sum[0] > 0) continue;
-			if( vic[0] > vic[1]){
-				resp.PB( MP( vic[0] , fat[k] ));
 			}
 		}
 	}
-	sort( resp.begin(), resp.end());
-	cout << resp.size() << endl;
-	REP(i,0,(int)resp.size()){
-		cout << resp[i].F << " " << resp[i].S << endl;
+	vector< I4 > resp;
+	while( !q.empty()){
+		resp.PB( q.front() );
+		PII a = q.front().FT, b = q.front().SD;
+		q.pop();
+		
+		int i = b.FT, j = b.SD;
+
+		REP(kk,0,4){
+			int ni = i + dy[kk];
+			int nj = j + dx[kk];
+			if( ni < 0 || ni >= n || nj < 0 || nj >= m ) continue;
+			if( in[ni][nj] == '.'){
+				PII aux = go(ni,nj);
+				if( aux.FT != -1 ){	
+					q.push( MP( PII(ni,nj), aux ));
+				}
+			}
+		}
 	}
+	
+	REP(i,0,n){
+		REP(j,0,m){
+			if( in[i][j] == '.'){
+				puts( "Not unique"  );
+				return 0;
+			}
+		}
+	}
+	int sz = resp.size();
+	REP(i,0,sz){
+		PII a = resp[i].FT, b = resp[i].SD;
+		if( a > b ) swap(a,b);
+		// DB(a.FT _ a.SD _ b.FT _ b.SD);
+		if( a.FT == b.FT){
+			in[a.FT][a.SD] = '<';
+			in[b.FT][b.SD] = '>';
+		} else {
+			in[a.FT][a.SD] = '^';
+			in[b.FT][b.SD] = 'v';
+		}
+	}
+	
+	REP(i,0,n) {
+		REP(j,0,m){
+			printf("%c", in[i][j]);
+		}
+		puts("");
+	}
+	
 	return 0;
 }

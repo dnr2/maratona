@@ -1,96 +1,10 @@
-12
-5 5
-AAAEE
-ABAHE
-A.AHF
-AAAHF
-.G...
-20 20
-....................
-...B................
-..BBBB..............
-..B..BBB............
-.BB....B............
-BBB....BBBBBBBBBB...
-BBB........SS.BBB...
-.BB........SSBB.....
-..B.....D..BBB......
-.BB....DDD.B........
-..BB.......B..BBB...
-...B.......BBBBBB...
-..BB.......BBBCBB...
-...B.KK...BB.BCB.II.
-...B.K..BBB..BCBBII.
-...BBBBBB....BBBBMII
-...BBBBBBB....BBB...
-...............BB...
-................BB..
-.................B..
-10 10
-..........
-.AAAAAAAAA
-.AA.....AA
-AAADDDDDAA
-AA.DD.DD.A
-A..D.C.D.A
-AA.D..DD.A
-AA.DDDDDAA
-.AAAA..AA.
-...A......
-10 10
-..........
-.AAAAAAAAA
-.AA.....AA
-AAADDDDDAA
-AA.DD.DD.A
-A..D.C.D.A
-AA.D..DD.A
-AA.DDDDDAA
-.AAAAFFAA.
-...AFFFF..
-7 8
-........
-.AAACC..
-.AAACC..
-.ABBCC..
-.ABBDD..
-.ABBDA..
-.AAAAAA.
-2 4
-AABB
-.CC.
-4 4
-..BB
-....
-CC..
-...D
-4 4
-AABB
-A..B
-C..D
-CCDD
-4 4
-A..B
-...B
-C..D
-CCDD
-6 21
-......AAAAAAAAAA..... 
-..AAAAAA.....AAAAAAAA     
-...AAAFFFFMMMFAA.B.AA          
-..GGAAH..P...CCAAAAA.        
-.GG..AAAAAAAAAAAF....
-..GGGG....FFFFFFF....
+3
 2 2
-A.
-..
-9 8
-........
-X....YZ.
-........
-.AAACC..
-.AAACC..
-.ABBCC..
-.ABBDD..
-.ABBDA..
-.AAAAAA.
+0 0 10 0
+0 1 10 1
+3 2
+635 187 241 269 308 254
+117 663 760 413
+2 3
+0 0 1 0
+0 0 1 0 2 0
