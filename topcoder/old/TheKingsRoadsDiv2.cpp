@@ -1,142 +1,76 @@
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <cfloat>
-#include <climits>
-#include <cctype>
-#include <cmath>
-#include <cassert>
-#include <ctime>
+#include <cstdio> 
+#include <cstdlib> 
+#include <cstring> 
+#include <cfloat> 
+#include <climits> 
+#include <cctype> 
+#include <cmath> 
+#include <cassert> 
+#include <ctime> 
 
-#include <iostream>
-#include <iomanip>
-#include <algorithm>
-#include <sstream>
-#include <string>
-#include <vector>
-#include <deque>
-#include <list>
-#include <queue>
-#include <stack>
-#include <map>
-#include <set>
-#include <bitset>
-#include <complex>
-#include <limits>
-#include <functional>
-#include <numeric>
+#include <iostream> 
+#include <iomanip> 
+#include <algorithm> 
+#include <sstream> 
+#include <string> 
+#include <vector> 
+#include <deque> 
+#include <list> 
+#include <queue> 
+#include <stack> 
+#include <map> 
+#include <set> 
+#include <bitset> 
+#include <complex> 
+#include <limits> 
+#include <functional> 
+#include <numeric> 
 
-using namespace std;
+using namespace std; 
 
-template<class T> void pv(T a, T b) { for (T i = a; i != b; ++i) cout << *i << " "; cout << endl; }
+template<class T> void pv(T a, T b) { for (T i = a; i != b; ++i) cout << *i << " "; cout << endl; } 
 
-typedef long long ll;
+typedef long long ll; 
 
-#define ll long long
-#define pii pair<int,int>
-#define F first
-#define S second
-#define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
-#define PI acos(-1)
-#define db(x) cerr << #x << " = " << x << endl;
-#define _ << ", " << 
-#define EPS 1e-9
-#define INF 1e9
-#define PB push_back
+#define ll long long 
+#define pii pair<int,int> 
+#define F first 
+#define S second 
+#define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i)) 
+#define PI acos(-1) 
+#define db(x) cerr << #x << " = " << x << endl; 
+#define _ << ", " <<  
+#define EPS 1e-9 
+#define INF 1e9 
+#define PB push_back 
 
 
-#define FT first
-#define SD second
-#define PII pair<int,int>
-#define MP make_pair
+#define FT first 
+#define SD second 
+#define PII pair<int,int> 
+#define MP make_pair 
 
-const int maxn = 4000;
-vector<int> adj[maxn];
-bool vis[maxn];
+const int maxn = 4000; 
+int dep[maxn];
 
 struct TheKingsRoadsDiv2 {
     string getAnswer(int h, vector <int> a, vector <int> b) {
-		int n = a.size();
-		REP(i,0,n+10) adj[i].clear();
-		
-		REP(i,0,n){
-			int x = a[i]-1, y = b[i]-1;
-			adj[x].PB( y );
-			adj[y].PB( x );			
-		}
-		// db( n );
-		REP(kk,0,n){
-			
-			int x = a[kk]-1, y = b[kk]-1;	
-			
-			REP(i,0,(int)adj[x].size()){
-				if( adj[x][i] == y){		
-					adj[x].erase( adj[x].begin() + i);
-					break;
-				}
-			}
-			REP(i,0,(int)adj[y].size()){
-				if( adj[y][i] == x){			
-					adj[y].erase( adj[y].begin() + i);
-					break;
-				}
-			}
-			
-			int raiz = -1;
-			bool ok = true;
-			REP(i,0,n){
-				if( adj[i].size() == 2){
-					if( raiz != -1 ){
-						ok = false; break;
-					}
-					raiz = i;
-				}
-			}
-			
-			// db( ok _ raiz _ x _ y);
-			
-			if( ok ){
-				queue<PII> q; 
-				q.push( MP(raiz, -1) );
-				
-				memset(vis,0,sizeof(vis));
-				
-				vis[raiz] = 1;
-				ok = true;
-				
-				while( !q.empty() && ok){
-					int v =  q.front().FT, pai = q.front().SD;
-					// db(v);
-					q.pop();
-					int sz = adj[v].size();
-					REP(i,0,sz){
-						int next = adj[v][i];
-						// db( next _ pai );
-						if( next == pai ) continue;
-						if( vis[next] ){
-							ok = false; break;
-						}	
-						vis[next] = 1;
-						q.push( PII( next, v ));
-					}
-				}
-				
-				if( ok ){
-					int cont = 0;
+        int n = a.size(); 
+		REP(rm,0,n){
+			REP(root,0,n){
+				queue<PII> fila;
+				memset( dep, 0, sizeof( dep ));
+				dep[root] = 1;
+				while( !fila.empty()){
+					int v = fila.front().FT, int pai = fila.front().SD;
 					REP(i,0,n){
-						cont += vis[i];
-					}
-					if( cont == n){
-						return "Correct";
+						
 					}
 				}
+				
 			}
-			
-			
-			adj[x].PB( y );
-			adj[y].PB( x );
 		}
-        return "Incorrect";
+		return "Incorrect";
     }
 };
 
@@ -270,26 +204,26 @@ namespace moj_harness {
 
 		// custom cases
 
-/*      case 5: {
-			int h                     = ;
-			int a[]                   = ;
-			int b[]                   = ;
-			string expected__         = ;
+      case 5: {
+			int h                     = 3;
+			int a[]                   = {4, 7, 7, 1, 1, 1, 4};
+			int b[]                   = {6, 5, 1, 7, 4, 3, 2};
+			string expected__         = "Incorrect";
 
 			std::clock_t start__      = std::clock();
 			string received__         = TheKingsRoadsDiv2().getAnswer(h, vector <int>(a, a + (sizeof a / sizeof a[0])), vector <int>(b, b + (sizeof b / sizeof b[0])));
 			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}*/
-/*      case 6: {
-			int h                     = ;
-			int a[]                   = ;
-			int b[]                   = ;
-			string expected__         = ;
+		}
+      case 6: {
+			int h                     = 3 ;
+			int a[]                   = {1, 1, 1, 1, 1, 1, 6};
+			int b[]                   = {2, 3, 4, 5, 6, 7, 7};
+			string expected__         = "Incorrect";
 
 			std::clock_t start__      = std::clock();
 			string received__         = TheKingsRoadsDiv2().getAnswer(h, vector <int>(a, a + (sizeof a / sizeof a[0])), vector <int>(b, b + (sizeof b / sizeof b[0])));
 			return verify_case(casenum__, expected__, received__, clock()-start__);
-		}*/
+		}
 /*      case 7: {
 			int h                     = ;
 			int a[]                   = ;
@@ -416,4 +350,3 @@ Here the road added by the King is obviously the self-loop from city 5 to itself
 
 **/
 // END CUT HERE
-

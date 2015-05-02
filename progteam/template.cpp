@@ -2,22 +2,8 @@
 //#tag
 //#sol
 
-#include <cstdio>
-#include <cstring>
-#include <string>
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <vector>
-#include <queue>
-#include <list>
-#include <stack>
-#include <map>
-#include <sstream>
-#include <climits>
-#include <set>
+#include <bits/stdc++.h>
+
 
 // #include <unordered_map>
 
@@ -46,6 +32,8 @@ template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<
 const int maxn = 1000;
 
 int main(){
-
+	
+	
+	
 	return 0;
 }

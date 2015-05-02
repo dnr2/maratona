@@ -1,0 +1,8 @@
+kk _ stcont = 0, 19
+kk _ stcont = 1, 32
+kk _ stcont = 0, 6
+kk _ stcont = 1, 2
+kk _ stcont = 0, 10
+kk _ stcont = 1, 17
+kk _ stcont = 0, 15702
+kk _ stcont = 1, 406353

@@ -25,45 +25,33 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int maxn = 100;
+const int maxn = 400000;
+
+int dx[] = {0,1,0,-1};
+int dy[] = {-1,0,1,0};
+
+ll in[maxn][2];
 
 int main(){
-	int n;
-	string str; 
-	cin >> n >> str;
-	vector<int> nums;
-	REP(i,0,n){
-		int aux = (str[i] -'0');
-		if( aux > 1 ){
-			if( aux == 4){
-				nums.PB( 3 );
-				nums.PB( 2 );
-				nums.PB( 2 );
-			} else if( aux == 6){				
-				nums.PB( 3 );
-				nums.PB( 5 );
-			} else if( aux == 8){
-				nums.PB( 2 );
-				nums.PB( 2 );
-				nums.PB( 2 );
-				nums.PB( 7 );
-			} else if( aux == 9){
-				nums.PB( 2 );
-				
-				nums.PB( 3 );
-				nums.PB( 3 );				
-				
-				nums.PB( 7 );
-			} else {
-				nums.PB( aux );
-			}
+	IOFAST();
+	ll n,m; cin >> n >> m;
+	
+	REP(i,0,m){
+		cin >> in[i][0] >> in[i][1];
+	}
+	ll resp = 0;
+	REP(i,1,m){
+		ll d = in[i][0] - in[i-1][0];
+		ll dh = abs(in[i][1] - in[i-1][1]);
+		if( dh > d ){
+			cout << "IMPOSSIBLE" << endl; 
+			return 0;
 		}
+		ll h = max( in[i][1], in[i-1][1]) + ((d-dh)/2);
+		resp = max( resp, h );
 	}
-	sort( nums.begin(), nums.end(), greater<int>());
-	int sz = nums.size();
-	REP(i,0,sz){
-		cout << nums[i];
-	}
-	cout << endl;
+	resp = max( resp, (in[0][0]-1)  + in[0][1] );
+	resp = max( resp, ( n - in[m-1][0])  + in[m-1][1] );
+	cout << resp << endl;
 	return 0;
 }

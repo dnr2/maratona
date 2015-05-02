@@ -25,7 +25,11 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int maxn = 100;
+const int maxn = 400;
+
+int dx[] = {0,1,0,-1};
+int dy[] = {-1,0,1,0};
+
 
 int main(){
 

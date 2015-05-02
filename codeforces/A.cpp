@@ -25,44 +25,36 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int maxn = 100;
+const int maxn = 400;
 
 int dx[] = {0,1,0,-1};
 int dy[] = {-1,0,1,0};
-const ll mod = 1000000007;
+
 
 int main(){
+	string in; cin >> in;
+	string c = "CODEFORCES";
+	int ok = false;
 	
-	IOFAST();
-	string str;
-	int sz; cin >> sz;
-	cin >> str;	
-	map<char,int> m;
-	vector< pair<int,char> > v;
+	int sz = in.size();
 	REP(i,0,sz){
-		m[str[i]]++;
-	}
-	v.PB( MP(m['A'], 'A'));
-	v.PB( MP(m['C'], 'C'));
-	v.PB( MP(m['G'], 'G'));
-	v.PB( MP(m['T'], 'T'));
-	
-	sort( v.begin(),v.end(), greater< pair<int,char> >() );
-
-	ll cont = 1;
-	REP(i,1,4){
-		if( v[i].FT == v[i-1].FT){
-			cont++;
-		} else {
-			break;
+		REP(j,i,sz){			
+			string b = "";			
+			REP(kk,0,i){
+				b+= in[kk];
+			}
+			REP(kk,j+1,sz){
+				b+= in[kk];
+			}
+			if( b == c ){
+				ok = true;
+			}			
 		}
 	}	
-	ll resp = 1;
-
-	REP(i,0,sz){
-		resp *= cont;
-		resp = resp % mod;
+	if( ok ){
+		puts("YES");
+	} else {
+		puts("NO");
 	}
-	cout << resp << endl;
 	return 0;
 }

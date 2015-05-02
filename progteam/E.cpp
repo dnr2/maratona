@@ -1,7 +1,3 @@
-//
-//#tag
-//#sol
-
 #include <cstdio>
 #include <cstring>
 #include <string>
@@ -17,116 +13,72 @@
 #include <map>
 #include <sstream>
 #include <climits>
-#include <set>
 
 // #include <unordered_map>
 
 #define ll long long
 #define ull unsigned long long
-#define PII pair<int,int>
-#define PLL pair<ll,ll>
-#define PDD pair<double,double>
-#define FT first
-#define SD second
-#define REP(i,j,k) for(ll (i)=(j);(i)<(k);++(i))
-#define PB push_back
+#define pii pair<int,int>
+#define pdd pair<double,double>
+#define F first
+#define S second
+#define fr(i,j,k) for(int (i)=(j);(i)<(k);++(i))
+#define rep(i,n) for(int (i)=0;(i)<(n);++(i))
+#define pb push_back
 #define PI acos(-1)
-#define DB(x) cerr << #x << " = " << x << endl;
+#define db(x) cerr << #x << " = " << x << endl;
 #define _ << ", " << 
-#define MP make_pair
-#define EPS 1e-9
-#define INF 0x3f3f3f3f
-#define IOFAST() ios_base::sync_with_stdio(0);cin.tie(0)
-#define FILL(x,v) memset(x,v,sizeof(x))
+#define mp make_pair
+#define cl(x) memset(x,0,sizeof(x))
+
 // #define umap unordered_map
 
 using namespace std;
 
-template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a; return os.str(); }
+vector<int> g[5010];
+int mark[5010], passo = 0;
+int fim = 0;
 
-const int MAXN = 100;
-
-char str[2][100];
-ll minus = -1, one = 1, digit = (1<<4)-1;
-ll mask[11][11][3];
-int mod[2] = {999983, 99991};
-list< PLL > * dist[2];
-
-ll get(int pos, ll key){
-	ll val = 0;
-	ll h = key %mod[pos];
-	for( list< PLL >::iterator it = dist[pos][h].begin(); it != dist[pos][h].end(); it++){
-		if( it->FT == key ){  val = it->SD; break; }
+int dfs(int x, int dep){	
+	if( mark[x] == passo) return -1;
+	mark[x] = passo;
+	if( x == fim ) {
+		if( dep == 0)  printf("The fleas meet at %d.\n", x);		
+		return dep;
 	}
-	return val;
-}
-
-void put(int pos,  ll key, ll val){
-	ll h = key % mod[pos];
-	for( list< PLL >::iterator it = dist[pos][h].begin(); it != dist[pos][h].end(); it++){
-		if( it->FT == key ){ it->SD= val; return; }
-	}
-	dist[pos][h].push_back( MP( key, val ));
-}
-
-void clean(int pos){
-	REP(i,0,mod[pos]) dist[pos][i].clear();
-}
-
-ll bfs( ll start, int go){
-	if( go == 0){
-		if( get(1,start) > 0) return get(1,start) -1;
-		clean( 0 ); 
-	}
-	REP(i,0,2) dist[i] = new list< PLL >[mod[i]];	
-	queue<ll> q;
-	q.push(start);
-	put( go,start,1);
-	while( !q.empty() ){
-		ll cur = q.front(); q.pop();				
-		ll distcur = get(go,cur);
-		REP(i,0,10){
-			ll newst = cur;
-			REP(j,i+1,10){
-				ll a = newst & mask[i][j][0];
-				ll b = newst & mask[i][j][1];
-				ll c = newst & mask[i][j][2];
-				newst = a | (b<<4) | (c >> ((j-i)*4));	
-				if( go && get(1,newst) == 0){
-					put(1,newst,distcur+1);									
-					if( distcur + 1 <= 5 ) q.push( newst);
-				} else if( go == 0) {
-					if( get(1,newst) > 0 ) {
-						return get(1,newst) + distcur - 1;
-					}
-					else if(  get(go,newst) ==0) {
-						put(go,newst,distcur +1);			
-						if( distcur +1 <= 3) q.push( newst);
-					}
-				}
+	int aux;
+	fr(i,0,g[x].size()){
+		aux = dfs( g[x][i], dep+1);
+		if( aux >=0 ) {
+			if( aux & 1 && dep == (aux>>1)){
+				printf("The fleas jump forever between %d and %d.\n",  
+					min(x, g[x][i]), max(x, g[x][i]));
+			} else if( (aux & 1) == 0 && dep == (aux>>1)) {
+				printf("The fleas meet at %d.\n", x);
 			}
+			return aux;
 		}
 	}
-	return 9;
+	return -1;
 }
 
-int main(){	
-	FILL(mask,0);
-	REP(i,0,10) REP(j,0,10) REP(k,0,10){
-		if( k < i || k > j) mask[i][j][0] += digit << (k*4);				
-		if( k >= i && k < j) mask[i][j][1] += digit << (k*4);
-		if( j == k) mask[i][j][2] += digit << (k*4);
-	}
-	ll start = 0;
-	REP(i,0,10) start += (i+1) << (i*4);
-	bfs( start, 1 );
-	while(scanf("%s%s", str[0], str[1]) > 0 ){		
-		if( str[0][0] == '*') break;
-		map<char,ll> ma;
-		REP(i,0,10) ma[str[0][i]] = i + 1;
-		ll st = 0;
-		REP(i,0,10) st +=  ma[str[1][i]] << (i*4);	
-		cout <<  bfs( st, 0 ) << endl;
+int main(){
+	
+
+	int n, l, a,b;
+	while( scanf("%d", &n) >0 && n){
+		fr(i,1,n+1) g[i].clear();		
+		fr(i,0,n-1){
+			scanf("%d%d", &a,&b );
+			g[a].pb(b); g[b].pb(a);
+		}
+		cin >> l;		
+		fr(i,0,l){		
+			passo++;
+			scanf("%d%d", &a,&b );
+			fim = b;
+			dfs( a, 0 );
+		}		
 	}
 	return 0;
 }

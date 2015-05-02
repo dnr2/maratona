@@ -5,7 +5,6 @@
 #define ll long long
 #define ull unsigned long long
 #define PII pair<int,int>
-#define I4 pair< PII , PII >
 #define PDD pair<double,double>
 #define FT first
 #define SD second
@@ -26,103 +25,85 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const int maxn = 2100;
-char in[maxn][maxn];
+const int maxn = 210;
+
 int dx[] = {0,1,0,-1};
 int dy[] = {-1,0,1,0};
-
-int n, m;
-
-PII go( int i, int j){
-
-	PII pos; int cont = 0;
-	pos = MP(-1,-1);
-	if( in[i][j] == '*') return pos;
-	REP(kk,0,4){
-		int ni = i + dy[kk];
-		int nj = j + dx[kk];
-		if( ni < 0 || ni >= n || nj < 0 || nj >= m ) continue;
-		if( in[ni][nj] == '.'){
-			pos = PII( ni, nj );
-			cont++;
-		}
-	}
-	if( cont == 1){
-		in[i][j] = in[pos.FT][pos.SD] = '*';
-		return pos;
-	}
-	return PII(-1,-1);
-}
+char in[maxn][maxn];
+char out[maxn][maxn];
+char tmp[maxn][maxn];
 
 int main(){
-
 	
-	cin >> n >> m;
+	int n; cin >> n;
 	REP(i,0,n){
 		scanf("%s", in[i]);
 	}
-	queue< I4 > q;
-	REP(i,0,n){
-		REP(j,0,m){
-			if( ((i + j) & 1) == 0 && in[i][j] == '.'){
-
-				PII ret = go( i, j);
-				if( ret.FT != -1){
-					q.push( MP( PII(i,j), ret ) );
+	FILL(out,'.');
+	out[n-1][n-1] = 'o';
 	
+	int m = 2*n-1;
+	
+	REP(i,0,m){
+		REP(j,0,m){
+			if( i == n-1 && j == n-1 ) continue;
+			char move = 'x'; int c1 = 0;
+			REP(y,0,n){
+				REP(x,0,n){
+					if( in[y][x] == 'o'){						
+						int ny = y + (i-(n-1));
+						int nx = x + (j-(n-1));
+						if( ny < 0 || nx < 0 || ny >= n || nx >= n) continue;
+						c1++;
+						if( in[ny][nx] == '.'){
+							move = '.'; goto proximo;
+						}					
+					}
 				}
-			}
+			}			
+			if( c1 == 0) move = '.';
+			proximo:
+			out[i][j] = move;
 		}
 	}
-	vector< I4 > resp;
-	while( !q.empty()){
-		resp.PB( q.front() );
-		PII a = q.front().FT, b = q.front().SD;
-		q.pop();
-		
-		int i = b.FT, j = b.SD;
-
-		REP(kk,0,4){
-			int ni = i + dy[kk];
-			int nj = j + dx[kk];
-			if( ni < 0 || ni >= n || nj < 0 || nj >= m ) continue;
-			if( in[ni][nj] == '.'){
-				PII aux = go(ni,nj);
-				if( aux.FT != -1 ){	
-					q.push( MP( PII(ni,nj), aux ));
+	
+	FILL(tmp,'.');
+	
+	REP(i,0,m){
+		REP(j,0,m){
+			if( i == n-1 && j == n-1 ) continue;
+			if( out[i][j] == 'x'){
+				REP(y,0,n){
+					REP(x,0,n){
+						if( in[y][x] == 'o'){
+							int ny = y + (i-(n-1));
+							int nx = x + (j-(n-1));
+							if( ny < 0 || nx < 0 || ny >= n || nx >= n) continue;							
+							tmp[ny][nx] = 'x'; 							
+						}
+					}
 				}
-			}
+			}			
 		}
 	}
 	
 	REP(i,0,n){
-		REP(j,0,m){
-			if( in[i][j] == '.'){
-				puts( "Not unique"  );
-				return 0;
+		REP(j,0,n){
+			if( (tmp[i][j] == 'x' && in[i][j] == '.') || 
+				(tmp[i][j] == '.' && in[i][j] == 'x') ){
+					
+				puts("NO"); return 0;
 			}
 		}
 	}
-	int sz = resp.size();
-	REP(i,0,sz){
-		PII a = resp[i].FT, b = resp[i].SD;
-		if( a > b ) swap(a,b);
-		// DB(a.FT _ a.SD _ b.FT _ b.SD);
-		if( a.FT == b.FT){
-			in[a.FT][a.SD] = '<';
-			in[b.FT][b.SD] = '>';
-		} else {
-			in[a.FT][a.SD] = '^';
-			in[b.FT][b.SD] = 'v';
-		}
-	}
-	
-	REP(i,0,n) {
+	puts("YES");
+	REP(i,0,m){
 		REP(j,0,m){
-			printf("%c", in[i][j]);
+			printf("%c", out[i][j]);
 		}
 		puts("");
 	}
 	
 	return 0;
 }
+

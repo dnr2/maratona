@@ -2,22 +2,8 @@
 //#tag
 //#sol
 
-#include <cstdio>
-#include <cstring>
-#include <string>
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <vector>
-#include <queue>
-#include <list>
-#include <stack>
-#include <map>
-#include <sstream>
-#include <climits>
-#include <set>
+#include <bits/stdc++.h>
+
 
 // #include <unordered_map>
 
@@ -43,89 +29,58 @@ using namespace std;
 
 template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str(); }
 
-const ll MAXN = 400000;
+const int maxn = 100;
 
-#define DOTS 400000
+int mat[maxn][maxn];
 
-///segmenttree-add
-ll NSEG; // Number of fields (with indices $0,\dots,NSEG-1$)
-ll maxin[DOTS]; // initialize to 0, WARNING: Should have at least size $2\cdot2^k+10$ with $2^k>N$ and $k\in\mathbb Z^+$
-ll off[DOTS]; // initialize to 0, WARNING: Should have at least size $2\cdot2^k+10$ with $2^k>N$ and $k\in\mathbb Z^+$
-
-void relax(ll i) {
-	maxin[i] |= off[i];
-	off[2*i+1] |= off[i];
-	off[2*i+2] |= off[i];
-	off[i] = 0;
-}
-
-// add(a,b,v) increases the values at $a,\dots,b-1$ by v
-void add(ll a, ll b, ll v, ll i=0, ll s=0, ll e=NSEG) {
-	if (b <= s || e <= a)
-		return;
-	if (a <= s && e <= b) {
-		off[i] |= v;
-		return;
-	}
-	relax(i);
-	add(a, b, v, 2*i+1, s, (s+e)/2);
-	add(a, b, v, 2*i+2, (s+e)/2, e);
-	maxin[i] = // Change this if you want the minimum.
-		(maxin[2*i+1] | off[2*i+1]) & (maxin[2*i+2] | off[2*i+2]) ;
-}
-
-// query(a,b) returns the max of the values at $a,\dots,b-1$
-ll query(ll a, ll b, ll i=0, ll s=0, ll e=NSEG) {
-	if (b <= s || e <= a)
-		return -1; // Change this if you want the minimum (should be a neutral element).
-	if (a <= s && e <= b)
-		return off[i] | maxin[i];
-	relax(i);
-	return  // Change this if you want the minimum.
-		query(a, b, 2*i+1, s, (s+e)/2) & query(a, b, 2*i+2, (s+e)/2, e);
-}
-
-
-ll N, M;
-ll in[MAXN][3];
-ll resp[MAXN];
+char format[10];
 
 int main(){
-	IOFAST();
-	while( cin >> N >> M){
-		FILL( resp, 0);
-		REP(i,0,M){
-			cin >> in[i][0] >> in[i][1] >> in[i][2];
-		}
-		NSEG = N + 1;
-		bool ok = true;
+	
+	int n; bool pline = false;
+	while( cin >> n){
 		
-		REP(j,0,MAXN) maxin[j]  = 0;
-		REP(j,0,MAXN) off[j]  = 0;
-		REP(i,0,M){
-			add( in[i][0], in[i][1]+1, in[i][2] );
-		}
-		REP(i,1,N+1){
-			resp[i] = query( i, i+1);
-		}
-		REP(i,0,M){			
-			if( query( in[i][0] , in[i][1]+1 ) != in[i][2] ){
-				ok = false;
-				goto end;
+		FILL(mat,0);
+		int y = 0, x = (n/2);
+		int num = 1;
+		REP(i,0,n){			
+			REP(j,0,n){
+				mat[y][x] = num++;
+				if( j + 1 == n ) break;
+				y--, x++;				
+				if( y < 0) y = n-1;
+				if( x >= n) x = 0;				
 			}
+			// DB( i _ y _ x );
+			y++;
+			if( y >=n ) y = 0;
 		}
 		
-		end:
-		if( !ok ){
-			cout << "NO" << endl;
-		} else {
-			cout << "YES" << endl;
-			REP(i,1,N+1){
-				if( i > 1) cout << " ";
-				cout << resp[i] ;
-			}
-			cout << endl;
+		int sum = 0;
+		REP(i,0,n) sum += mat[i][0];
+		
+		if( pline) puts("");		
+		else pline = true;
+		printf("n=%d, sum=%d\n", n, sum);
+		
+		int sz = 0, aux = n * n;
+		while( aux > 0){
+			sz++; aux /= 10;
 		}
+		sz++;
+		
+		
+		format[0]= '%';
+		sprintf(format+1, "%dd",  sz);
+		
+		
+		REP(i,0,n){
+			REP(j,0,n){
+				printf( format, mat[i][j]);
+			}
+			puts("");
+		}		
+		
 	}
 	
 	return 0;

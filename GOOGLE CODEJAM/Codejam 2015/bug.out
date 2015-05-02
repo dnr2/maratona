@@ -1,0 +1,12 @@
+c.cpp: In function 'double distSP(pt, pt, pt)':
+c.cpp:53:37: error: 'comp' was not declared in this scope
+c.cpp: In function 'int main()':
+c.cpp:92:22: error: no matching function for call to 'std::vector<int>::push_back(pt&)'
+c.cpp:92:22: note: candidate is:
+c:\program files (x86)\dev-cpp\mingw32\bin\../lib/gcc/mingw32/4.6.1/include/c++/bits/stl_vector.h:826:7: note: void std::vector<_Tp, _Alloc>::push_back(const value_type&) [with _Tp = int, _Alloc = std::allocator<int>, std::vector<_Tp, _Alloc>::value_type = int]
+c:\program files (x86)\dev-cpp\mingw32\bin\../lib/gcc/mingw32/4.6.1/include/c++/bits/stl_vector.h:826:7: note:   no known conversion for argument 1 from 'pt' to 'const value_type& {aka const int&}'
+c.cpp:95:27: error: could not convert 'vec' from 'std::vector<int>' to 'std::vector<pt>'
+c.cpp:97:14: error: expected initializer before '==' token
+c.cpp:99:7: error: 'ok' was not declared in this scope
+c.cpp:103:9: error: 'ok' was not declared in this scope
+c.cpp:107:10: error: 'ok' was not declared in this scope

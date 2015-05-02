@@ -1,77 +1,76 @@
 //http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=380
+//#tag DFS 
+//#tag shortest path 
+//#sol dfs to find shortest path
 
 #include <cstdio>
-#include <cstdlib>
 #include <cstring>
+#include <string>
 #include <cmath>
-#include <algorithm>
+#include <cstdlib>
 #include <iostream>
+#include <algorithm>
+#include <vector>
 #include <vector>
 #include <queue>
+#include <list>
+#include <stack>
+#include <map>
+#include <sstream>
+#include <climits>
+#include <set>
+
+// #include <unordered_map>
+
+#define ll long long
+#define ull unsigned long long
+#define pii pair<int,int>
+#define pdd pair<double,double>
+#define F first
+#define S second
+#define REP(i,j,k) for(int (i)=(j);(i)<(k);++(i))
+#define pb push_back
+#define PI acos(-1)
+#define db(x) cerr << #x << " = " << x << endl;
+#define _ << ", " << 
+#define mp make_pair
+#define EPS 1e-9
+#define INF 0x3f3f3f3f
+#define IOFAST ios_base::sync_with_stdio(0);cin.tie(0)
+// #define umap unordered_map
 
 using namespace std;
 
-int i, j, a, b, c, d ,m ;
-int p, q, k , n, e;
+template <class _T> inline string tostr(const _T& a){ ostringstream os(""); os<<a;return os.str();}
 
-char s1[10], s2[10];
+char in[2][10];
+int dp[10][10];
 
-int arr[8][8];
-
+int dx[] = {1,2,2,1,-1,-2,-2,-1};
+int dy[] = {-2,-1,1,2,2,1,-1,-2};
 
 int main(){
-
-	// freopen("in.txt", "r", stdin);
-	// freopen("out.txt", "w", stdout);	
-	
-	while(scanf("%s %s", s1, s2) > 0){	
-		a = s1[0] - 'a';
-		b = s1[1] - '1';
-		c = s2[0] - 'a';
-		d = s2[1] - '1';
-		bool fim = false;
-		memset( arr, 0, sizeof(arr));
-		arr[a][b] = 1;
-		for( i = 2; !fim; i++){
-			fim = true;
-			for( j = 0; j < 8; j++){
-				for( k = 0; k < 8; k++){
-					if(arr[j][k] == i-1){
-						fim = false;
-						if( j - 2 >= 0 && k - 1 >= 0 && !arr[j-2][k-1]  ){
-							arr[j-2][k-1] = i;
-						}
-						if( j - 2 >= 0 && k + 1 < 8 && !arr[j-2][k+1]){
-							arr[j-2][k+1] = i;
-						}
-						if( j - 1 >= 0 && k - 2 >= 0 && !arr[j-1][k-2]){
-							arr[j-1][k-2] = i;
-						}
-						if( j - 1 >= 0 && k + 2 < 8 && !arr[j-1][k+2]) {
-							arr[j-1][k+2] = i;
-						}
-						if( j + 1 < 8 && k - 2 >= 0 &&  !arr[j+1][k-2]){
-							arr[j+1][k-2] = i;
-						}
-						if( j + 1 < 8 && k + 2 < 8 && !arr[j+1][k+2]){
-							arr[j+1][k+2] = i;
-						}
-						if( j + 2 < 8 && k - 1 >= 0 && !arr[j+2][k-1]){
-							arr[j+2][k-1] = i;
-						}
-						if( j + 2 < 8 && k + 1 < 8 && !arr[j+2][k+1]){
-							arr[j+2][k+1] = i;
-						}
-					}
-				}
+	while( scanf("%s%s" , in[0] , in[1]) > 0 ){
+		pii ini = mp( in[0][0]-'a', in[0][1]-'1');
+		pii end = mp( in[1][0]-'a', in[1][1]-'1');
+		REP(i,0,10)REP(j,0,10) dp[i][j] = 1e8;
+		queue<pii> q;
+		q.push( ini );
+		dp[ini.F][ini.S] = 0;
+		while( !q.empty()){
+			pii cur = q.front(); q.pop();
+			if( cur == end){
+				printf("To get from %s to %s takes %d knight moves.\n", in[0], in[1], dp[cur.F][cur.S]);
+				break;
 			}
-			if(arr[c][d]){
-				fim = true;
-				printf("To get from %s to %s takes %d knight moves.\n", s1, s2, arr[c][d]-1);
+			REP(i,0,8){
+				int ny = cur.F + dy[i];
+				int nx = cur.S + dx[i];
+				if( ny < 0 || ny >= 8 || nx < 0 || nx >= 8 || dp[ny][nx] != 1e8) continue;
+				dp[ny][nx] = dp[cur.F][cur.S] + 1;
+				q.push( mp( ny, nx));
 			}
 		}
-	
-	}
-	
+	}	
 	return 0;
 }
